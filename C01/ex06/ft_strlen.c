@@ -1,29 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_div_mod.c                                       :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/13 19:09:34 by wlin              #+#    #+#             */
-/*   Updated: 2023/07/14 10:47:47 by wlin             ###   ########.fr       */
+/*   Created: 2023/07/19 21:03:32 by wlin              #+#    #+#             */
+/*   Updated: 2023/07/19 22:21:52 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-void	ft_div_mod(int a, int b, int *div, int *mod)
+/*
+#include <unistd.h>
+*/
+int	ft_strlen(char *str)
 {
-	*div = a / b;
-	*mod = a % b;
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		i++;
+	}
+	return (i);
 }
 /*
-int main()
+int	main(void)
 {
-	int a;
-	int b;
-	int *div;
-	int *mod;
-	div = &a;
-	mod = &b;
-	ft_div_mod(2, 2, div, mod);
-	return (0)
-}*/
+	char	*v;
+	char	o;
+	char	str[5] = "Hello";
+	
+	v = &str[0];
+	o = ft_strlen(v) + '0';
+	write(1, &o, 1);
+}
+*/

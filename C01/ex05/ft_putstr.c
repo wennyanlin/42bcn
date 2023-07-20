@@ -1,29 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_div_mod.c                                       :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/13 19:09:34 by wlin              #+#    #+#             */
-/*   Updated: 2023/07/14 10:47:47 by wlin             ###   ########.fr       */
+/*   Created: 2023/07/19 21:06:09 by wlin              #+#    #+#             */
+/*   Updated: 2023/07/19 21:06:15 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_div_mod(int a, int b, int *div, int *mod)
+#include <unistd.h>
+
+void	ft_putstr(char *str)
 {
-	*div = a / b;
-	*mod = a % b;
+	int		i;
+	char	c;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		c = str[i];
+		write(1, &c, 1);
+		++i;
+	}
 }
-/*
-int main()
-{
-	int a;
-	int b;
-	int *div;
-	int *mod;
-	div = &a;
-	mod = &b;
-	ft_div_mod(2, 2, div, mod);
-	return (0)
-}*/
+
+//
+//int	main(void)
+//{
+//	char	*str;
+//
+//	str = "sdjfh";
+//     ft_putstr(str);
+//     return (0);
+// }
