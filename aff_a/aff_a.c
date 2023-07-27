@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 14:37:21 by wlin              #+#    #+#             */
-/*   Updated: 2023/07/27 17:45:42 by wlin             ###   ########.fr       */
+/*   Updated: 2023/07/27 18:39:22 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 	if (argc != 2)
 	{
 		write(1, "a\n", 2);
-		return (1);
+		return (0);
 	}
 	if (argc == 2)
 	{
@@ -31,12 +31,12 @@ int main(int argc, char *argv[])
 			write(1, "a\n", 2);
 			return (0);
 		}
-		else if (argv[1][i] != 'a')
-		{
-			write(1, "\n", 1);
-			return (1);
-		}
 		i++;
+	}
+	if	(argv[1][i] != 'a')
+	{
+		write(1, "\n", 1);
+		return (1);
 	}
 	}
 	return (0);
