@@ -13,7 +13,7 @@
 //#include <stdio.h>
 int	ft_isalnum(int c)
 {
-	int isalnum;
+	int	isalnum;
 
 	isalnum = 0;
 	if (('0' <= c && c <= '9') || ('A' <= c && c <= 'Z')
@@ -21,7 +21,7 @@ int	ft_isalnum(int c)
 	{
 		isalnum = 1;
 	}
-	return isalnum;
+	return (isalnum);
 }
 /* int main()
 {
