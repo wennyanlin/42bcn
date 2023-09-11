@@ -12,35 +12,39 @@
 
 NAME = libft.a
 
-FLAGS = -Wall -Werror -Wextra
+INCLUDES = libft.h
 
-SRC = ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint \
+SRCS = ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint \
 ft_strlen.c ft_tolower.c ft_toupper.c
 
-BSRC =
+OBJS = $(SRC:.c=.o)
 
-HEADER = libft.h
+COMPILER = cc
 
-OBJ =
+FLAGS = -Wall -Werror -Wextra
 
-OBJBONUS =
+%.o: %.c
+	${COMPILER} ${FLAGS} -I ${INCLUDES} -c $< -o $@
 
-all:
+$(NAME): ${OBJS}
+	ar rcs ${NAME} ${OBJS}
 
-...
-
-$(NAME): $(OBJ)
-		ar rc $(NAME) $(OBJ)
-
-bonus:
-
-.bonus:
+all: ${NAME}
 
 clean:
-	rm -f$(OBJ)$(OBJBONUS).bonus
+	rm -f$(OBJS)
 
 fclean: clean
 	rm -f $(NAME)
-	re:fclean all
+
+re:
+	fclean all
 
 .PHONY:
+	all bonus clean fclean re
+//https://dev.to/mcaci/the-meaning-of-the-phony-target-inside-a-makefile-4fj8
+
+/****THIS IS ONLY A COMMENT****
+resource:
+//specialsigns = https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html#Automatic-Variables
+*/
