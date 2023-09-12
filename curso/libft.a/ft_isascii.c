@@ -10,14 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include <stdio.h>
+//#include <stdio.h>
 
 int	ft_isascii(int c)
 {
-	int	isascii;
+	unsigned int	isascii;
 
 	isascii = 0;
-	if (' ' <= c && c <= '~')
+	if (c >= 0 && c <= 127)
 	{
 		isascii = 1;
 	}
@@ -28,6 +28,6 @@ int	main(void)
 {
 	int	c;
 
-	c = 32;
+	c = 0;
 	printf("%i", ft_isascii(c));
 } */
