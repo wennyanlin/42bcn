@@ -15,7 +15,7 @@ NAME = libft.a
 INCLUDES = libft.h
 
 SRCS = ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint \
-ft_strlen.c ft_tolower.c ft_toupper.c
+ft_strlen.c ft_tolower.c ft_toupper.c ft_strchr.c ft_strlcpy.c ft_strlcat.c
 
 OBJS = $(SRC:.c=.o)
 
