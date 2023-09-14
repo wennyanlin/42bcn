@@ -1,39 +1,32 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_strlcat.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/14 13:51:27 by wlin              #+#    #+#             */
-/*   Updated: 2023/09/14 13:51:30 by wlin             ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 #include <stdio.h>
-size_t	ft_strlcat(char *dest, const char *src, size_t size)
+size_t	ft_strlcat(char *dest, const char *src, size_t dstsize)
 {
 	size_t	i;
 	size_t	destlen;
 	size_t	srclen;
 
-	i = 0;
-	destlen = 0;
+	destlen = dstsize;
 	srclen = 0;
-	while (dest[destlen])
-	{
-		destlen++;
-	}
-	while (src[srclen])
+	while (src[srclen] && srclen < (dstsize - 1))
 	{
 		dest[destlen] = src[srclen];
 		srclen++;
+		destlen++;
 	}
-	printf("%s", dest);
-	return (dest);
+	dest[destlen] = '\0';
+	while (src[srclen])
+	{
+		srclen++;
+	}
+	return (dstsize + srclen);
 }
 
 
-/* int	main()
+int	main()
 {
-printf("c", )
-} */
+	size_t dstsize= 6;
+	char *src = "Adios123";
+	char dest[12] = "Hola, ";
+	printf("%zu", ft_strlcat(dest, src, dstsize));
+	return (0);
+}
