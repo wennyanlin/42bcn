@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 16:48:39 by wlin              #+#    #+#             */
-/*   Updated: 2023/10/04 18:11:53 by wlin             ###   ########.fr       */
+/*   Updated: 2023/10/05 18:07:32 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,26 @@ int	ft_printf(const	char *str, ...)
 int	select_fmt(char c, va_list args)
 {
 	if (c == '%')
-		putchar('%');
+		put_c('%');
 	else if (c == 'c')
-		putchar(va_arg(args, int));
+		put_c(va_arg(args, int));
+	else if (c == 's')
+		put_s(va_arg(args, char *));
+	else if (c == 'p')
+		//put_s(va-arg(args, char *));
+	else if (c == 'd')
+		put_i(va_arg(args, int));
+	else if (c == 'i')
+		put_i(va_arg(args, int));
+	else if (c == 'u')
+		put_i(va_arg(args, int));
+	else if (c == 'x')
+		//put_x(va_arg(args, ));
+	else if (c == 'X')
+		//put_x(va_arg(args, ));
 }
 
-void	putchar(char c)
+void	putchar(int c)
 {
 	write(1, &c, 1);
 }

@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printf.h                                           :+:      :+:    :+:   */
+/*   put_s.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/04 16:27:42 by wlin              #+#    #+#             */
-/*   Updated: 2023/10/05 13:24:19 by wlin             ###   ########.fr       */
+/*   Created: 2023/10/05 12:41:55 by wlin              #+#    #+#             */
+/*   Updated: 2023/10/05 13:26:57 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "printf.h"
 
-#ifndef PRINTF_H
-# define PRINTF_H
-# include <stdarg.h>
-# include <unistd.h>
+int	put_s(char *s)
+{
+	int	i;
 
-#endif
+	i = 0;
+	while (s[i] != '\0')
+	{
+		write(1, s[i], 1);
+		i++;
+	}
+	return (i);
+}
