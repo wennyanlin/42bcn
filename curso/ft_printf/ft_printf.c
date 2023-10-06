@@ -6,11 +6,35 @@
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 16:48:39 by wlin              #+#    #+#             */
-/*   Updated: 2023/10/05 18:07:32 by wlin             ###   ########.fr       */
+/*   Updated: 2023/10/06 18:35:53 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
+
+
+int	select_fmt(char c, va_list args)
+{
+	if (c == '%')
+		write(1, "%", 1);
+	else if (c == 'c')
+		return (0);
+	else if (c == 's')
+		return (0);
+	else if (c == 'p')
+		return (0);
+	else if (c == 'd')
+		put_i(va_arg(args, int));
+	else if (c == 'i')
+		put_i(va_arg(args, int));
+	else if (c == 'u')
+		return (0);
+	else if (c == 'x')
+		return (0);
+	else if (c == 'X')
+		return (0);
+	return (0);
+}
 
 int	ft_printf(const	char *str, ...)
 {
@@ -24,37 +48,18 @@ int	ft_printf(const	char *str, ...)
 	while (str[i] != '\0')
 	{
 		if (str[i] == '%')
-			select_fmt(str[i + 1], args)//call function and start checking which format.
+			select_fmt(str[i + 1], args);
 		else
-			putchar(str[i]);//call funcition and print.
+			return (0);
 		i++;
 	}
 	return (i);
 }
 
-int	select_fmt(char c, va_list args)
+int	main()
 {
-	if (c == '%')
-		put_c('%');
-	else if (c == 'c')
-		put_c(va_arg(args, int));
-	else if (c == 's')
-		put_s(va_arg(args, char *));
-	else if (c == 'p')
-		//put_s(va-arg(args, char *));
-	else if (c == 'd')
-		put_i(va_arg(args, int));
-	else if (c == 'i')
-		put_i(va_arg(args, int));
-	else if (c == 'u')
-		put_i(va_arg(args, int));
-	else if (c == 'x')
-		//put_x(va_arg(args, ));
-	else if (c == 'X')
-		//put_x(va_arg(args, ));
-}
-
-void	putchar(int c)
-{
-	write(1, &c, 1);
+	char *v = "sdfgh%igh";
+	int r = -4568;
+	int	result = ft_printf(v, r);
+	printf("%i", result);
 }
