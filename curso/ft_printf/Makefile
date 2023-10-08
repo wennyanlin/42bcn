@@ -6,7 +6,7 @@
 #    By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/04 15:08:25 by wlin              #+#    #+#              #
-#    Updated: 2023/10/04 16:27:22 by wlin             ###   ########.fr        #
+#    Updated: 2023/10/07 17:01:20 by wlin             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = libftprintf.a
 
 INCLUDES = ft_printf.h
 
-SRCS = 
+SRCS = ft_printf.c ft_put_digit.c ft_put_chars.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -25,8 +25,8 @@ FLAGS = -Wall -Werror -Wextra
 %.o: %.c Makefile ${INCLUDES}
 	$(COMPILER) $(FLAGS) -I $(INCLUDES) -c $< -o $@
 
-$(NAME): $(OBJ)
-	rm -rcs $(NAME) $(OBJS)
+$(NAME): $(OBJS) $(INCLUDES) Makefile
+	ar -rcs $(NAME) $(OBJS)
 
 all: $(NAME)
 
