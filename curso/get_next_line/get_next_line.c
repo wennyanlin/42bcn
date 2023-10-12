@@ -6,30 +6,45 @@
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:06:14 by wlin              #+#    #+#             */
-/*   Updated: 2023/10/11 17:07:27 by wlin             ###   ########.fr       */
+/*   Updated: 2023/10/12 13:16:32 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+
+
+char	*ft_update_storage()
+{
+	char	*new_storage;
+	//copie from storage to new_storage till BUFFER_SIZE starting from \n
+	//erase till 1st \n
+	return (new_storage);
+}
+
+char	*ft_read_fd(int fd, char *storage)
+{
+	char	*buffer;
+	//read till BUFFER_SIZE into buffer
+	//copie from buffer to
+	//appends what ve been read to updated_storage
+	return (storage);
+}
+
 char    *get_next_line(int fd)
 {
-    char    *buffer;
-    int     actual_bytes_read;
+	char			*line;
+    static char    *storage = NULL;
 
-    if (fd < 0)
-    {
-        return (NULL);
-    }
-    buffer = (char *)malloc(100 * sizeof(char));
-    if (buffer == NULL)
-        return (NULL);
-    actual_bytes_read = read(fd, buffer, 10);
-	return (buffer);
-    //return (0);
-	//a function that going to read and stores every bytes read in storage
+    if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+ 	//a function that going to read and stores every bytes read in storage
+	storage = ft_read_fd(fd, storage);
 	//a function to extract each line after read from fd and return the line
+	line = ft_write_line(storage);
 	//a function to update storage;
+	storage = ft_update_storage(storage);
+	return(line);
 }
 
 int main()

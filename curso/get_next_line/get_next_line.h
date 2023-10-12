@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 13:47:55 by wlin              #+#    #+#             */
-/*   Updated: 2023/10/11 14:55:35 by wlin             ###   ########.fr       */
+/*   Updated: 2023/10/12 13:16:44 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <fcntl.h>
 # include <stdlib.h>
 # include <stdio.h>
+
+# define BUFFER_SIZE 42
 
 char	*get_next_line(int fd);
 
