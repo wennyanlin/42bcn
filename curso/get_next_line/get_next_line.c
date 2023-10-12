@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:06:14 by wlin              #+#    #+#             */
-/*   Updated: 2023/10/12 13:16:32 by wlin             ###   ########.fr       */
+/*   Updated: 2023/10/12 16:53:37 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,17 @@ char	*ft_update_storage()
 char	*ft_read_fd(int fd, char *storage)
 {
 	char	*buffer;
+	int		actual_bytes_read;
 	//read till BUFFER_SIZE into buffer
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	actual_bytes_read = read(fd, buffer, BUFFER_SIZE);
+	storage = ft_update_storage(storage, buffer);
+	while ( ft_strchr(storage, '\n') == NULL && actual_bytes_read == BUFFER_SIZE)
+	{
+		actual_bytes_read = read(fd, buffer, BUFFER_SIZE);
+		storage = ft_update_storage(storage, buffer);
+	}
+		return (NULL);
 	//copie from buffer to
 	//appends what ve been read to updated_storage
 	return (storage);

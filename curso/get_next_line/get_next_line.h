@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 13:47:55 by wlin              #+#    #+#             */
-/*   Updated: 2023/10/12 13:16:44 by wlin             ###   ########.fr       */
+/*   Updated: 2023/10/12 16:53:45 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@
 # include <stdlib.h>
 # include <stdio.h>
 
-# define BUFFER_SIZE 42
+# define BUFFER_SIZE 2
 
 char	*get_next_line(int fd);
+
+12:\n\0
 
 #endif
