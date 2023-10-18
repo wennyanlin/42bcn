@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:06:14 by wlin              #+#    #+#             */
-/*   Updated: 2023/10/12 16:53:37 by wlin             ###   ########.fr       */
+/*   Updated: 2023/10/18 17:16:38 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,15 @@
 
 
 
-char	*ft_update_storage()
+char	*ft_update_storage(storage, buffer)
 {
 	char	*new_storage;
+
 	//copie from storage to new_storage till BUFFER_SIZE starting from \n
+	while (storage && ft_strchr(buffer, '\n'))
+	{
+
+	}
 	//erase till 1st \n
 	return (new_storage);
 }
@@ -26,20 +31,28 @@ char	*ft_read_fd(int fd, char *storage)
 {
 	char	*buffer;
 	int		actual_bytes_read;
-	//read till BUFFER_SIZE into buffer
+
+	actual_bytes_read = 1;
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	actual_bytes_read = read(fd, buffer, BUFFER_SIZE);
-	storage = ft_update_storage(storage, buffer);
-	while ( ft_strchr(storage, '\n') == NULL && actual_bytes_read == BUFFER_SIZE)
+	if (!buffer)
+		return (NULL);
+	buffer[0] = '\0';
+	while (actual_bytes_read > 0 && !ft_strchr(buffer, '\n'))
 	{
 		actual_bytes_read = read(fd, buffer, BUFFER_SIZE);
-		storage = ft_update_storage(storage, buffer);
+		if (actual_bytes_read == -1)
+		{
+			free(buffer);
+			free(storage);
+		}
+		buffer[actual_bytes_read] = '\0';
+		storage = ft_strjoin (storage, buffer);
 	}
-		return (NULL);
-	//copie from buffer to
-	//appends what ve been read to updated_storage
+	free(storage);
 	return (storage);
 }
+
+
 
 char    *get_next_line(int fd)
 {
@@ -53,14 +66,14 @@ char    *get_next_line(int fd)
 	//a function to extract each line after read from fd and return the line
 	line = ft_write_line(storage);
 	//a function to update storage;
-	storage = ft_update_storage(storage);
+	storage = ft_update_storage(storage, NULL);
 	return(line);
 }
 
 int main()
 {
     //char	*path = "/Users/wlin/Desktop/test1.txt";
-	int		f;
+	int		fd;
 	char	*str;
 
 	int i = 0;
@@ -68,14 +81,10 @@ int main()
 	while (i < 3)
 	{
 		//printf("%s", str);
-			str = get_next_line(fd);
+		str = get_next_line(fd);
 		printf("%s", str);
 		i++;
 	}
 	free(str);
 	close(fd);
-
-	//read the file
-    //print out the first 10 bytes
-    //close the file
 }
