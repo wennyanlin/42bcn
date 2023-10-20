@@ -6,14 +6,14 @@
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:06:14 by wlin              #+#    #+#             */
-/*   Updated: 2023/10/18 17:16:38 by wlin             ###   ########.fr       */
+/*   Updated: 2023/10/20 21:55:30 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 
-
+/*
 char	*ft_update_storage(storage, buffer)
 {
 	char	*new_storage;
@@ -25,7 +25,7 @@ char	*ft_update_storage(storage, buffer)
 	}
 	//erase till 1st \n
 	return (new_storage);
-}
+}*/
 
 char	*ft_read_fd(int fd, char *storage)
 {
@@ -52,7 +52,25 @@ char	*ft_read_fd(int fd, char *storage)
 	return (storage);
 }
 
+char	*ft_write_line(char *storage)
+{
+	char	*line;
+	size_t	i;
 
+	i = 0;
+	while (storage[i] != '\n')
+		i++;
+	line = malloc((i + 1) * sizeof(char));
+	if (!line)
+		return (NULL);
+	i = 0;
+	while (storage[i] == '\n' || storage[i] == '\0')
+	{
+		line[i] = '\0';
+		return (line);
+	}
+	return (line);
+}
 
 char    *get_next_line(int fd)
 {
@@ -66,7 +84,7 @@ char    *get_next_line(int fd)
 	//a function to extract each line after read from fd and return the line
 	line = ft_write_line(storage);
 	//a function to update storage;
-	storage = ft_update_storage(storage, NULL);
+	//storage = ft_update_storage(storage, NULL);
 	return(line);
 }
 

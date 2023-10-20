@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 13:47:55 by wlin              #+#    #+#             */
-/*   Updated: 2023/10/18 16:30:19 by wlin             ###   ########.fr       */
+/*   Updated: 2023/10/20 21:30:54 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # define BUFFER_SIZE 2
 
 char	*get_next_line(int fd);
-
+char	*ft_strchr(const char *s, int c);
+size_t	ft_strlen(const char *s);
+char	*ft_strjoin(char const *s1, char const *s2);
 
 #endif
