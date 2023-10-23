@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 13:47:55 by wlin              #+#    #+#             */
-/*   Updated: 2023/10/20 21:30:54 by wlin             ###   ########.fr       */
+/*   Updated: 2023/10/23 18:39:22 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,15 @@
 # include <stdlib.h>
 # include <stdio.h>
 
-# define BUFFER_SIZE 2
+#ifndef BUFFER_SIZE 
+# define BUFFER_SIZE 4
+#endif
 
 char	*get_next_line(int fd);
 char	*ft_strchr(const char *s, int c);
 size_t	ft_strlen(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_strlcpy(char *dest, const char *src, size_t size);
 
 #endif
