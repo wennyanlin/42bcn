@@ -6,28 +6,37 @@
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:06:14 by wlin              #+#    #+#             */
-/*   Updated: 2023/10/23 18:48:35 by wlin             ###   ########.fr       */
+/*   Updated: 2023/10/24 17:01:27 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_update_storage(char *storage, char *buffer, char *line)
+char	*ft_update_storage(char *storage)
 {
 	char	*updated_storage;
-	size_t	substr_start;
-	size_t	substr_len;
-	(void)buffer;
+	size_t	i;
+	size_t	j;
 
-	printf("storage = %s\n", storage);
-	substr_start = ft_strlen(line);
-	substr_len = ft_strlen(storage) - substr_start;
-	//extract the rest piece from the storage
-	updated_storage = ft_substr(storage, substr_start, substr_len);
-	//append the new buffer read to the storage
-
-	printf("updated_storage = %s\n", updated_storage);
-
+	i = 0;
+	while (storage[i] && storage[i] != '\n')
+		i++;
+	if (!storage[i])
+	{
+		free(storage);
+		return (NULL);
+	}
+	updated_storage = malloc((ft_strlen(storage) - i + 1) * sizeof(char));
+	if (!updated_storage)
+		return (NULL);
+	i++;
+	j = 0;
+	while (storage[i])
+	{
+		updated_storage[j++] = storage[i++];
+	}
+	free(storage);
+	printf("updated_storage--->%s\n", updated_storage);
 	return (updated_storage);
 }
 
@@ -69,14 +78,12 @@ char	*ft_write_line(char *storage)
 	if (!line)
 		return (NULL);
 	i = 0;
-	printf("entering\n");
 	while (storage[i] != '\n')// || storage[i] != '\0')
 	{
 		line[i] = storage[i];
 		i++;
 	}
 	if (storage[i] == '\n' || storage[i] == '\0')
-		printf("hola\n");
 			line[i] = '\0';
 	return (line);
 }
@@ -94,7 +101,7 @@ char	*get_next_line(int fd)
 	line = ft_write_line(storage);
 	printf("line -> %s\n", line);
 	//a function to update storage;
-	storage = ft_update_storage(storage, NULL, line);
+	storage = ft_update_storage(storage);
 	return (line);
 }
 
@@ -112,7 +119,7 @@ int main()
 		//printf("%s", str);
 		str = get_next_line(fd);
 		printf("%s", str);
-	  i++;
+	  	i++;
 	}
 	free(str);
 	close(fd);
