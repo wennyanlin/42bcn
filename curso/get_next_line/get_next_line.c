@@ -6,30 +6,28 @@
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:06:14 by wlin              #+#    #+#             */
-/*   Updated: 2023/10/26 15:14:28 by wlin             ###   ########.fr       */
+/*   Updated: 2023/10/26 15:29:01 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_update_storage(char *storage)
+char	*ft_update_storage(char *storage, char *line)
 {
 	char	*updated_storage;
 	size_t	i;
 	size_t	j;
 
-	i = 0;
+	i = ft_strlen(line);
+	j = ft_strlen(storage);
 	if (!storage)
 		return (NULL);
-	while (storage[i] && storage[i] != '\n')
-		i++;
 	if (!storage[i])
 	{
 		free (storage);
 		return (NULL);
 	}
-	i++;
-	updated_storage = malloc((ft_strlen(storage) - i + 1) * sizeof(char));
+	updated_storage = malloc((j - i + 1) * sizeof(char));
 	if (!updated_storage)
 	{
 		free(storage);
@@ -116,7 +114,7 @@ char	*get_next_line(int fd)
 		storage = NULL;
 		return (NULL);
 	}
-	storage = ft_update_storage(storage);
+	storage = ft_update_storage(storage, line);
 	return (line);
 }
 /*
