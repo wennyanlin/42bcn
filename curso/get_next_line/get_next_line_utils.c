@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 17:13:02 by wlin              #+#    #+#             */
-/*   Updated: 2023/10/23 18:48:39 by wlin             ###   ########.fr       */
+/*   Updated: 2023/10/26 15:04:26 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,14 @@ size_t	ft_strlen(const char *s)
 	size_t	i;
 
 	i = 0;
-	while (s[i])
+	if (!s)
+		return (0);
+	while (s[i] != '\0')
 		i++;
 	return (i);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*result;
 	size_t	t_len;
@@ -50,6 +52,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		s1 = (char *)malloc(sizeof(char));
 		if (!s1)
 			return (NULL);
+		s1[0] = '\0';
 	}
 	t_len = ft_strlen(s1) + ft_strlen(s2);
 	result = (char *)malloc((t_len + 1) * sizeof(char));
@@ -62,6 +65,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	while (s2[++j] != '\0')
 		result[i + j] = s2[j];
 	result[i + j] = '\0';
+	free(s1);
 	return (result);
 }
 
@@ -108,7 +112,6 @@ char	*ft_strlcpy(char *dest, const char *src, size_t size)
 	}
 	return (dest);
 }
-
 /*
 int	main()
 {
@@ -117,7 +120,7 @@ int	main()
 
 	printf("%s", ft_strchr(s, c));
 	return (0);
-}*//*
+}
 int	main()
 {
 	char const s1[] = "Hola";

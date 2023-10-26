@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:06:14 by wlin              #+#    #+#             */
-/*   Updated: 2023/10/24 17:01:27 by wlin             ###   ########.fr       */
+/*   Updated: 2023/10/26 15:14:28 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,27 @@ char	*ft_update_storage(char *storage)
 	size_t	j;
 
 	i = 0;
+	if (!storage)
+		return (NULL);
 	while (storage[i] && storage[i] != '\n')
 		i++;
 	if (!storage[i])
 	{
+		free (storage);
+		return (NULL);
+	}
+	i++;
+	updated_storage = malloc((ft_strlen(storage) - i + 1) * sizeof(char));
+	if (!updated_storage)
+	{
 		free(storage);
 		return (NULL);
 	}
-	updated_storage = malloc((ft_strlen(storage) - i + 1) * sizeof(char));
-	if (!updated_storage)
-		return (NULL);
-	i++;
 	j = 0;
 	while (storage[i])
-	{
 		updated_storage[j++] = storage[i++];
-	}
+	updated_storage[j] = '\0';
 	free(storage);
-	printf("updated_storage--->%s\n", updated_storage);
 	return (updated_storage);
 }
 
@@ -45,11 +48,14 @@ char	*ft_read_fd(int fd, char *storage)
 	char	*buffer;
 	int		actual_bytes_read;
 
-	actual_bytes_read = 1;
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
+	{
+		free(storage);
 		return (NULL);
+	}
 	buffer[0] = '\0';
+	actual_bytes_read = 1;
 	while (actual_bytes_read > 0 && !ft_strchr(buffer, '\n'))
 	{
 		actual_bytes_read = read(fd, buffer, BUFFER_SIZE);
@@ -72,19 +78,24 @@ char	*ft_write_line(char *storage)
 	size_t	i;
 
 	i = 0;
-	while (storage[i] != '\n')
+	if (storage[i] == '\0')
+		return (NULL);
+	while (storage[i] && storage[i] != '\n')
+		i++;
+	if (storage[i] == '\n')
 		i++;
 	line = malloc((i + 1) * sizeof(char));
 	if (!line)
 		return (NULL);
 	i = 0;
-	while (storage[i] != '\n')// || storage[i] != '\0')
+	while (storage[i] && storage[i] != '\n')
 	{
 		line[i] = storage[i];
 		i++;
 	}
-	if (storage[i] == '\n' || storage[i] == '\0')
-			line[i] = '\0';
+	if (storage[i] == '\n')
+		line[i++] = '\n';
+	line[i] = '\0';
 	return (line);
 }
 
@@ -93,34 +104,36 @@ char	*get_next_line(int fd)
 	char			*line;
 	static char		*storage = NULL;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if ((fd < 0 || BUFFER_SIZE <= 0))
 		return (NULL);
-	//a function that going to read and stores every bytes read in storage
 	storage = ft_read_fd(fd, storage);
-	//a function to extract each line after read from fd and return the line
+	if (!storage)
+		return (NULL);
 	line = ft_write_line(storage);
-	printf("line -> %s\n", line);
-	//a function to update storage;
+	if (!line)
+	{
+		free(storage);
+		storage = NULL;
+		return (NULL);
+	}
 	storage = ft_update_storage(storage);
 	return (line);
 }
-
+/*
 int main()
 {
-    //char	*path = "/Users/wlin/Desktop/test1.txt";
-	int		fd;
+    int		fd;
 	char	*str;
 
-	int i = 0;
 	fd = open("test.txt", O_RDONLY);
-	//str = get_next_line(fd);
-	while (i <= 5)
+	printf("###Main Result###\n");
+	str = "test";
+	while (str != NULL)
 	{
-		//printf("%s", str);
-		str = get_next_line(fd);
-		printf("%s", str);
-	  	i++;
+		printf("\nDel while de main: %s\n", str);
+		//free(str);
+	  	str = get_next_line(fd);
 	}
-	free(str);
 	close(fd);
 }
+*/
