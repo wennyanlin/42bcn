@@ -1,0 +1,88 @@
+hola que tal como estas\n\n\n\n\n\n muy bine\n fantastico\0
+
+BUFER_SIZE = 5
+storage = NULL
+buffer = "hola "
+storage = "hola "
+buffer = "que t"
+storage = "hola que t"
+buffer = "al co"
+storage = "hola que tal co"
+buffer = "mo es"
+sorage = "hola que tal como es"
+buffer = "tas\n\n"
+storage = "holaa que tal como estas\n\n"
+
+
+line = "hola que tal como estas\n"
+new_storage = "\n"
+return line
+
+
+//vuelven a llamar a get_next_line
+
+storage = "\n"
+como storage tiene una linea no llamo a llenar storage
+line = "\n"
+new_storage = NULL
+return line
+
+//vuelven a llamar a get next line
+storage = null
+buffer = "\n\n\n\n "
+storage = "\n\n\n\n "
+line = "\n"
+new_Storage = '\n\n\n'
+return line
+
+
+// vuelven a llamar
+storage = "\n\n\n"
+no llamamos a llenar storage
+line = "\n"
+new_Storage = '\n\n"
+return line
+
+// vueven
+
+storage = "\n\n"
+no llamamos
+lie = "\n"
+new_Storage = "\n"
+return line
+
+//volvemos a llamar
+storage = "\n"
+no llamamos
+line = "\n"
+new_Storage = NULL
+
+//volvemos a llamar
+storage = NULL
+buffer = " muy "
+storage = " muy "
+buffer = "biene"
+stoorage = " muy biene"
+buffer = "\n fan"
+storage = " muy biene\n fan"
+line = " muy biene\n"
+new_Storage = " fan"
+return line
+
+//volvemos a llamar
+storage = " fan"
+buffer = "tasti"
+storage = " fantasti"
+buffer = "co"
+storage = " fantastico"
+buffer = ""
+NUM BYTES = 0!!!!!!!
+line = " fantastico"
+new_Storage = NULL
+return line
+
+//volvemos a llamar 
+storage = NULL
+buffer = ""
+NUM BYTES  = 0
+no line, return NULL
