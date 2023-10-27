@@ -6,11 +6,21 @@
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:06:14 by wlin              #+#    #+#             */
-/*   Updated: 2023/10/26 15:29:01 by wlin             ###   ########.fr       */
+/*   Updated: 2023/10/27 20:45:37 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+void	*ft_free_space(char **reserved_space)
+{
+	if (*reserved_space)
+	{
+		free(*reserved_space);
+		*reserved_space = NULL;
+	}
+	return (NULL);
+}
 
 char	*ft_update_storage(char *storage, char *line)
 {
@@ -22,17 +32,11 @@ char	*ft_update_storage(char *storage, char *line)
 	j = ft_strlen(storage);
 	if (!storage)
 		return (NULL);
-	if (!storage[i])
-	{
-		free (storage);
-		return (NULL);
-	}
+	if (!storage[i])//why another?
+		return (ft_free_space(&storage));
 	updated_storage = malloc((j - i + 1) * sizeof(char));
 	if (!updated_storage)
-	{
-		free(storage);
-		return (NULL);
-	}
+		return (ft_free_space(&storage));
 	j = 0;
 	while (storage[i])
 		updated_storage[j++] = storage[i++];
@@ -48,10 +52,7 @@ char	*ft_read_fd(int fd, char *storage)
 
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
-	{
-		free(storage);
-		return (NULL);
-	}
+		return (ft_free_space(&storage));
 	buffer[0] = '\0';
 	actual_bytes_read = 1;
 	while (actual_bytes_read > 0 && !ft_strchr(buffer, '\n'))
@@ -60,8 +61,7 @@ char	*ft_read_fd(int fd, char *storage)
 		if (actual_bytes_read == -1)
 		{
 			free(buffer);
-			free(storage);
-			return (NULL);
+			return (ft_free_space(&storage));
 		}
 		buffer[actual_bytes_read] = '\0';
 		storage = ft_strjoin (storage, buffer);
@@ -106,18 +106,14 @@ char	*get_next_line(int fd)
 		return (NULL);
 	storage = ft_read_fd(fd, storage);
 	if (!storage)
-		return (NULL);
+		return (ft_free_space(&storage));
 	line = ft_write_line(storage);
 	if (!line)
-	{
-		free(storage);
-		storage = NULL;
-		return (NULL);
-	}
+		return (ft_free_space(&storage));
 	storage = ft_update_storage(storage, line);
 	return (line);
 }
-/*
+/*ls
 int main()
 {
     int		fd;
@@ -133,5 +129,4 @@ int main()
 	  	str = get_next_line(fd);
 	}
 	close(fd);
-}
-*/
+}*/
