@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/18 17:13:02 by wlin              #+#    #+#             */
-/*   Updated: 2023/10/28 18:49:39 by wlin             ###   ########.fr       */
+/*   Created: 2023/10/28 12:51:26 by wlin              #+#    #+#             */
+/*   Updated: 2023/10/28 18:09:25 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_strchr(const char *s, int c)
 {
@@ -73,7 +73,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	i = ft_strlen(s1);
 	result = ft_strdup(s1, s2);
 	if (!result)
-		return (NULL);//maybe free_space
+		return (NULL);
 	j = -1;
 	while (s2[++j] != '\0')
 		result[i + j] = s2[j];

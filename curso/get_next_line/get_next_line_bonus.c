@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/09 16:06:14 by wlin              #+#    #+#             */
-/*   Updated: 2023/10/28 18:49:41 by wlin             ###   ########.fr       */
+/*   Created: 2023/10/28 12:11:10 by wlin              #+#    #+#             */
+/*   Updated: 2023/10/28 18:17:23 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 void	*ft_free_space(char **reserved_space)
 {
@@ -41,7 +41,7 @@ char	*ft_update_storage(char *storage, char *line)
 	while (storage[i])
 		updated_storage[j++] = storage[i++];
 	updated_storage[j] = '\0';
-	ft_free_space(&storage);
+	free(storage);
 	return (updated_storage);
 }
 
@@ -102,20 +102,20 @@ char	*ft_write_line(char *storage)
 char	*get_next_line(int fd)
 {
 	char			*line;
-	static char		*storage = NULL;
+	static char		*storage[OPEN_MAX];
 
 	if ((fd < 0 || BUFFER_SIZE <= 0))
 		return (NULL);
-	storage = ft_read_fd(fd, storage);
-	if (!storage)
-		return (ft_free_space(&storage));
-	line = ft_write_line(storage);
+	storage[fd] = ft_read_fd(fd, storage[fd]);
+	if (!storage[fd])
+		return (ft_free_space(&storage[fd]));
+	line = ft_write_line(storage[fd]);
 	if (!line)
-		return (ft_free_space(&storage));
-	storage = ft_update_storage(storage, line);
+		return (ft_free_space(&storage[fd]));
+	storage[fd] = ft_update_storage(storage[fd], line);
 	return (line);
 }
-/*ls
+/*
 int main()
 {
     int		fd;
