@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:11:10 by wlin              #+#    #+#             */
-/*   Updated: 2023/10/28 18:17:23 by wlin             ###   ########.fr       */
+/*   Updated: 2023/10/28 19:42:46 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*ft_update_storage(char *storage, char *line)
 	while (storage[i])
 		updated_storage[j++] = storage[i++];
 	updated_storage[j] = '\0';
-	free(storage);
+	ft_free_space(&storage);
 	return (updated_storage);
 }
 
@@ -65,8 +65,6 @@ char	*ft_read_fd(int fd, char *storage)
 		}
 		buffer[actual_bytes_read] = '\0';
 		storage = ft_strjoin (storage, buffer);
-		if (!storage)
-			return (NULL);
 	}
 	free(buffer);
 	return (storage);
