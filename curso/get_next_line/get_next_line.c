@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:06:14 by wlin              #+#    #+#             */
-/*   Updated: 2023/10/28 18:49:41 by wlin             ###   ########.fr       */
+/*   Updated: 2023/10/28 19:25:12 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ char	*ft_read_fd(int fd, char *storage)
 		}
 		buffer[actual_bytes_read] = '\0';
 		storage = ft_strjoin (storage, buffer);
-		if (!storage)
-			return (NULL);
 	}
 	free(buffer);
 	return (storage);

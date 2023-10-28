@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 17:13:02 by wlin              #+#    #+#             */
-/*   Updated: 2023/10/28 18:49:39 by wlin             ###   ########.fr       */
+/*   Updated: 2023/10/28 19:25:14 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,45 +40,45 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_strdup(char *s1, char *s2)
+char	*ft_strdup(char *storage, char *buffer)
 {
-	char	*dup_s1;
+	char	*dup_storage;
 	int		i;
 
 	i = -1;
-	if (!s1 || !s2)
+	if (!storage || !buffer)
 		return (NULL);
-	dup_s1 = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!dup_s1)
-		return (NULL);
-	while (s1[++i] != '\0')
-		dup_s1[i] = s1[i];
-	dup_s1[i] = '\0';
-	return (dup_s1);
+	dup_storage = malloc(ft_strlen(storage) + ft_strlen(buffer) + 1);
+	if (!dup_storage)
+		return (ft_free_space(&storage));
+	while (storage[++i] != '\0')
+		dup_storage[i] = storage[i];
+	dup_storage[i] = '\0';
+	return (dup_storage);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *storage, char *buffer)
 {
 	char	*result;
 	int		i;
 	int		j;
 
-	if (!s1)
+	if (!storage)
 	{
-		s1 = malloc(sizeof(char));
-		if (!s1)
+		storage = malloc(sizeof(char));
+		if (!storage)
 			return (NULL);
-		s1[0] = '\0';
+		storage[0] = '\0';
 	}
-	i = ft_strlen(s1);
-	result = ft_strdup(s1, s2);
+	i = ft_strlen(storage);
+	result = ft_strdup(storage, buffer);
 	if (!result)
-		return (NULL);//maybe free_space
+		return (NULL);
 	j = -1;
-	while (s2[++j] != '\0')
-		result[i + j] = s2[j];
+	while (buffer[++j] != '\0')
+		result[i + j] = buffer[j];
 	result[i + j] = '\0';
-	free(s1);
+	free(storage);
 	return (result);
 }
 
