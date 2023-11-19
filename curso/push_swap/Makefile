@@ -6,11 +6,11 @@
 #    By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/18 16:49:23 by wlin              #+#    #+#              #
-#    Updated: 2023/11/18 18:55:02 by wlin             ###   ########.fr        #
+#    Updated: 2023/11/19 23:02:09 by wlin             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = push_swap.out
+NAME = push_swap
 
 INCLUDES = push_swap.h
 
@@ -36,7 +36,8 @@ lib:
 all: lib $(NAME)
 
 clean:
-		rm -f $(OBJS)
+		rm -f $(OBJS) 
+		$(MAKE) -C ./libft fclean
 
 fclean: clean
 		rm -f $(NAME)

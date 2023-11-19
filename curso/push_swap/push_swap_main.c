@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_main.c                                   :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/17 21:09:17 by wlin              #+#    #+#             */
-/*   Updated: 2023/11/18 23:31:58 by wlin             ###   ########.fr       */
+/*   Created: 2023/11/19 20:15:32 by wlin              #+#    #+#             */
+/*   Updated: 2023/11/19 22:40:45 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	write_error(void)
 {
-	write(1, "Error\n", 6);
-	return ;
+	write(2, "Error\n", 6);
+	exit(0);
 }
 
 int	is_duplicate(int argc, char **argv)
@@ -46,7 +46,8 @@ int	is_digit(int argc, char **argv)
 	j = 0;
 	while (i < argc)
 	{
-		if (argv[i][j] == '-' && argv[i][j + 1] >= '0' && argv[i][j + 1] <= '9')
+		if ((argv[i][j] == '-' || argv[i][j] == '+') && argv[i][j + 1] >= '0' \
+				&& argv[i][j + 1] <= '9')
 			j++;
 		else if (argv[i][j] == '\0')
 			write_error();
@@ -69,7 +70,7 @@ int	is_integer(int argc, char **argv)
 	i = 1;
 	while (i < argc)
 	{
-		if (ft_atoi(argv[i]) < -2147483648 && ft_atoi(argv[i]) > 2147483647)
+		if (ft_atoi(argv[i]) < -2147483648 || ft_atoi(argv[i]) > 2147483647)
 			write_error();
 		i++;
 	}
