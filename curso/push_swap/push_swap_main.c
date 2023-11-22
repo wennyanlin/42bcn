@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 20:15:32 by wlin              #+#    #+#             */
-/*   Updated: 2023/11/22 19:26:08 by wlin             ###   ########.fr       */
+/*   Updated: 2023/11/22 21:17:21 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,14 +110,15 @@ int	main(int argc, char **argv)
 		list->next = NULL;
 		list = tmp;
 		//tmp = list;
-		while (list)
+		/*while (list)
 		{
 			printf("%d\n", list->data);
 			list = list->next;
-		}
+		}*/
 		list = tmp;
 		//list = move_swap(list);
-		list = move_rotate(list);
+		//list = move_rotate(list);
+		list = move_reverse_rotate(list);
 		while (list)
 		{
 			printf("%d\n", list->data);
