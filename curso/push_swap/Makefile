@@ -6,7 +6,7 @@
 #    By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/18 16:49:23 by wlin              #+#    #+#              #
-#    Updated: 2023/11/22 19:25:26 by wlin             ###   ########.fr        #
+#    Updated: 2023/11/22 21:32:33 by wlin             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,19 +16,19 @@ INCLUDES = push_swap.h
 
 LIBFT = ./libft/libft.a
 
-SRCS = push_swap_main.c move_swap.c move_rotate.c
+SRCS = push_swap_main.c move_swap.c move_rotate.c move_reverse_rotate.c
 
 OBJS = $(SRCS:.c=.o)
 
 COMPILER = gcc
 
-CFLAGS = -g -Wall -Werror -Wextra -fsanitize=address
+CFLAGS = -g -Wall -Werror -Wextra
 
 #%.o: %.c Makefile $(INCLUDES)
 #	$(COMPILER) $(CFLAGS) -I $(INCLUDES) -c $< -o $(NAME)
 
 $(NAME): lib $(LIBFT) $(OBJS) $(INCLUDES) Makefile
-	$(COMPILER) $(SRCS) -L./libft -lft -o $(NAME)
+	$(COMPILER) $(SRCS) -L./libft -lft -g -fsanitize=address -o $(NAME)
 
 lib:
 	$(MAKE) -C ./libft
