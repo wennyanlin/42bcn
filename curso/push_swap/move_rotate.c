@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   move_rotate.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/17 21:33:13 by wlin              #+#    #+#             */
-/*   Updated: 2023/11/22 19:24:43 by wlin             ###   ########.fr       */
+/*   Created: 2023/11/22 18:17:09 by wlin              #+#    #+#             */
+/*   Updated: 2023/11/22 19:27:47 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#include "push_swap.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include "./libft/libft.h"
-# include <stdio.h>
-typedef struct s_stack
+t_stack	*move_rotate(t_stack *list)
 {
-	int				data;
-	struct s_stack	*next;
-}	t_stack;
+		t_stack	*tmp;
+		t_stack	*head;
 
-int		is_duplicate(int argc, char **str_b);
-int		is_digit(int argc, char **argv);
-int		is_integer(int argc, char **argv);
-t_stack	*move_swap(t_stack *list);
-t_stack	*move_rotate(t_stack *list);
-
-#endif
+		tmp = list;
+		head = list->next;
+		while (list->next != NULL)
+			list = list->next;
+		tmp->next = NULL;
+		list->next = tmp;
+		return(head);
+}
+/*
+t_stack *ra(t_stack *a)
+{
+	move_rotate();
+	write(1, "ra\n", 3);
+}*/

@@ -6,7 +6,7 @@
 #    By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/18 16:49:23 by wlin              #+#    #+#              #
-#    Updated: 2023/11/19 23:02:09 by wlin             ###   ########.fr        #
+#    Updated: 2023/11/22 19:25:26 by wlin             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,13 +16,13 @@ INCLUDES = push_swap.h
 
 LIBFT = ./libft/libft.a
 
-SRCS = push_swap_main.c
+SRCS = push_swap_main.c move_swap.c move_rotate.c
 
 OBJS = $(SRCS:.c=.o)
 
 COMPILER = gcc
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -g -Wall -Werror -Wextra -fsanitize=address
 
 #%.o: %.c Makefile $(INCLUDES)
 #	$(COMPILER) $(CFLAGS) -I $(INCLUDES) -c $< -o $(NAME)
@@ -42,6 +42,6 @@ clean:
 fclean: clean
 		rm -f $(NAME)
 
-re:		flean all
+re:		fclean all
 
 .PHONY: all clean fclean re
