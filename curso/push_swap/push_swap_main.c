@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 20:15:32 by wlin              #+#    #+#             */
-/*   Updated: 2023/11/22 21:17:21 by wlin             ###   ########.fr       */
+/*   Updated: 2023/11/22 23:24:12 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ int	main(int argc, char **argv)
 {
 	t_stack	*tmp;
 	t_stack *list;
+	t_stack	*list_a;
+	t_stack	*list_b = NULL;
 	int		i;
 
 	i = 1;
@@ -115,16 +117,40 @@ int	main(int argc, char **argv)
 			printf("%d\n", list->data);
 			list = list->next;
 		}*/
-		list = tmp;
+
+		//list = tmp;
 		//list = move_swap(list);
 		//list = move_rotate(list);
-		list = move_reverse_rotate(list);
-		while (list)
-		{
-			printf("%d\n", list->data);
-			list = list->next;
-		}
+		//list = move_reverse_rotate(list);
+		list_a = list;
 
+//		move_push(list_a, list_b);
+		if (list_b)
+		{
+			list_b = list_a;
+			list_a = list_a->next;
+			list_b->next = NULL;
+		}
+		else
+		{
+			tmp = list_b;
+			list_b = list_a;
+			list_a = list_a->next;
+			list_b->next = tmp;
+		}
+		printf("------- STACK A -------\n\n");
+		while (list_a)
+		{
+			printf("%d\n", list_a->data);
+			list_a = list_a->next;
+		}
+		printf("------- STACK B -------\n\n");
+		while (list_b)
+		{
+	
+			printf("%d\n", list_b->data);
+			list_b = list_b->next;
+		}
 	}
 	return (0);
 }

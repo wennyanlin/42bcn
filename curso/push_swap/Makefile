@@ -6,7 +6,7 @@
 #    By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/18 16:49:23 by wlin              #+#    #+#              #
-#    Updated: 2023/11/22 21:32:33 by wlin             ###   ########.fr        #
+#    Updated: 2023/11/22 22:42:09 by wlin             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ INCLUDES = push_swap.h
 
 LIBFT = ./libft/libft.a
 
-SRCS = push_swap_main.c move_swap.c move_rotate.c move_reverse_rotate.c
+SRCS = push_swap_main.c move_swap.c move_rotate.c move_reverse_rotate.c \
+		move_push.c
 
 OBJS = $(SRCS:.c=.o)
 
