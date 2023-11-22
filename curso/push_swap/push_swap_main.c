@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 20:15:32 by wlin              #+#    #+#             */
-/*   Updated: 2023/11/19 22:40:45 by wlin             ###   ########.fr       */
+/*   Updated: 2023/11/22 19:26:08 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,51 @@ int	is_integer(int argc, char **argv)
 
 int	main(int argc, char **argv)
 {
-	if (argc == 1)
-		return (0);
-	else
+	t_stack	*tmp;
+	t_stack *list;
+	int		i;
+
+	i = 1;
+	if (argc > 1)
 	{
 		is_duplicate(argc, argv);
 		is_digit(argc, argv);
 		is_integer(argc, argv);
-		return (0);
+
+		list = NULL;
+		list = malloc(sizeof(t_stack));
+		tmp = list;
+		while (argc > 1)
+		{
+			//tmp = ft_calloc(sizeof(t_stack));
+			//tmp->data = ft_atoi(argv[i]);
+			//ft_stackadd_back(&list, tmp);
+			list->data = ft_atoi(argv[i]);
+			if (argc - 1 > 1)
+			{
+				list->next = malloc(sizeof(t_stack));
+				list = list->next;
+			}
+			i++;
+			argc--;
+		}
+		list->next = NULL;
+		list = tmp;
+		//tmp = list;
+		while (list)
+		{
+			printf("%d\n", list->data);
+			list = list->next;
+		}
+		list = tmp;
+		//list = move_swap(list);
+		list = move_rotate(list);
+		while (list)
+		{
+			printf("%d\n", list->data);
+			list = list->next;
+		}
+
 	}
+	return (0);
 }
