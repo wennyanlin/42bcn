@@ -6,7 +6,7 @@
 /*   By: wlin <wlin@student.42barcelona.>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 20:15:32 by wlin              #+#    #+#             */
-/*   Updated: 2023/11/22 23:24:12 by wlin             ###   ########.fr       */
+/*   Updated: 2023/11/23 11:31:51 by wlin             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,20 +124,7 @@ int	main(int argc, char **argv)
 		//list = move_reverse_rotate(list);
 		list_a = list;
 
-//		move_push(list_a, list_b);
-		if (list_b)
-		{
-			list_b = list_a;
-			list_a = list_a->next;
-			list_b->next = NULL;
-		}
-		else
-		{
-			tmp = list_b;
-			list_b = list_a;
-			list_a = list_a->next;
-			list_b->next = tmp;
-		}
+		move_push(&list_a, &list_b);
 		printf("------- STACK A -------\n\n");
 		while (list_a)
 		{
