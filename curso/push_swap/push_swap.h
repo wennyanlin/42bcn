@@ -30,5 +30,6 @@ t_stack	*move_swap(t_stack *list);
 t_stack	*move_rotate(t_stack *list);
 t_stack	*move_reverse_rotate(t_stack *list);
 void	move_push(t_stack **list_a, t_stack **list_b);
+void    stack_init(t_stack *list, char **nbrs, int n);
 
 #endif
