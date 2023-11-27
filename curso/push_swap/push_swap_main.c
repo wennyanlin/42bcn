@@ -79,52 +79,28 @@ int	is_integer(int argc, char **argv)
 
 int	main(int argc, char **argv)
 {
-	t_stack	*tmp;
 	t_stack *list;
-	t_stack	*list_a;
-	t_stack	*list_b = NULL;
-	int		i;
 
-	i = 1;
 	if (argc > 1)
 	{
 		is_duplicate(argc, argv);
 		is_digit(argc, argv);
 		is_integer(argc, argv);
-
 		list = NULL;
 		list = malloc(sizeof(t_stack));
-		tmp = list;
-		while (argc > 1)
-		{
-			//tmp = ft_calloc(sizeof(t_stack));
-			//tmp->data = ft_atoi(argv[i]);
-			//ft_stackadd_back(&list, tmp);
-			list->data = ft_atoi(argv[i]);
-			if (argc - 1 > 1)
-			{
-				list->next = malloc(sizeof(t_stack));
-				list = list->next;
-			}
-			i++;
-			argc--;
-		}
-		list->next = NULL;
-		list = tmp;
-		//tmp = list;
-		/*while (list)
+		stack_init(list, argv, argc);
+		while (list)
 		{
 			printf("%d\n", list->data);
 			list = list->next;
-		}*/
-
-		//list = tmp;
+		}
 		//list = move_swap(list);
 		//list = move_rotate(list);
 		//list = move_reverse_rotate(list);
-		list_a = list;
+		//move_push(&list_a, &list_b); a void funciton
 
-		move_push(&list_a, &list_b);
+		//list_a = list;
+		/*
 		printf("------- STACK A -------\n\n");
 		while (list_a)
 		{
@@ -137,7 +113,7 @@ int	main(int argc, char **argv)
 	
 			printf("%d\n", list_b->data);
 			list_b = list_b->next;
-		}
+		}*/
 	}
 	return (0);
 }
