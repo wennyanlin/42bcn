@@ -1,7 +1,6 @@
 #include "push_swap.h"
-#include <stdlib.h>
 
-void    stack_init(t_stack *list, char **nbrs, int n)
+void    ps_stack_init(t_stack *list, char **nbrs, int n)
 {
     t_stack *tmp;
     int     i;
@@ -14,7 +13,7 @@ void    stack_init(t_stack *list, char **nbrs, int n)
 			//tmp->data = ft_atoi(argv[i]);
 			//ft_stackadd_back(&list, tmp);
             //-----------------------------------
-			list->data = atoi(nbrs[i]);
+			list->data = ft_atoi(nbrs[i]);
 			if (n > 2)
 			{
 				list->next = malloc(sizeof(t_stack));
