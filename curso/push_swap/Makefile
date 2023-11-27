@@ -16,8 +16,8 @@ INCLUDES = push_swap.h
 
 LIBFT = ./libft/libft.a
 
-SRCS = push_swap_main.c move_swap.c move_rotate.c move_reverse_rotate.c \
-		move_push.c push_swap_init.c
+SRCS = ps_main.c move_swap.c move_rotate.c move_reverse_rotate.c \
+		move_push.c ps_stack_init.c ps_input_validate.c
 
 OBJS = $(SRCS:.c=.o)
 
