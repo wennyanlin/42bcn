@@ -9,12 +9,12 @@ void    ps_stack_init(t_stack *list, char **nbrs, int n)
     tmp = list;
     while (n >= 2)
     {   //---------Another way---------------
-	//tmp = ft_calloc(sizeof(t_stack));
-	//tmp->data = ft_atoi(argv[i]);
-	//ft_stackadd_back(&list, tmp);
+		//tmp = ft_calloc(sizeof(t_stack));
+		//tmp->data = ft_atoi(argv[i]);
+		//ft_stackadd_back(&list, tmp);
         //-----------------------------------
-	list->data = ft_atoi(nbrs[i]);
-	if (n > 2)
+		list->data = ft_atoi(nbrs[i]);
+		if (n > 2)
 	{
 		list->next = malloc(sizeof(t_stack));
 		list = list->next;
@@ -23,7 +23,7 @@ void    ps_stack_init(t_stack *list, char **nbrs, int n)
 	n--;
     }
 	list->next = NULL;
-	ist = tmp;
+	list = tmp;
 }
 /*
 int main(int c, char **v)

@@ -12,17 +12,16 @@
 
 #include "push_swap.h"
 
-t_stack	*move_reverse_rotate(t_stack *list)
+void	move_reverse_rotate(t_stack **list)
 {
 	t_stack	*head;
 	t_stack	*tmp;
 
-	head = list;
-	while (list->next->next != NULL)
-		list = list->next;
-	tmp = list->next;
-	list->next = NULL;
-	list = head;
+	head = *list;
+	while ((*list)->next->next != NULL)
+		*list = (*list)->next;
+	tmp = (*list)->next;
+	(*list)->next = NULL;
 	tmp->next = head;
-	return (tmp);
+	*list = tmp;
 }

@@ -12,18 +12,22 @@
 
 #include "push_swap.h"
 
-t_stack	*move_rotate(t_stack *list)
+#include "push_swap.h"
+
+void	move_rotate(t_stack **list)
 {
 		t_stack	*tmp;
 		t_stack	*head;
 
-		tmp = list;
-		head = list->next;
-		while (list->next != NULL)
-			list = list->next;
+		tmp = *list;
+		head = (*list)->next;
+		while ((*list)->next != NULL)
+			*list = (*list)->next;
 		tmp->next = NULL;
-		list->next = tmp;
-		return(head);
+		(*list)->next = tmp;
+		*list = head;
+
+		//return(head);
 }
 /*
 t_stack *ra(t_stack *a)

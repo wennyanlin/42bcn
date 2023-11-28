@@ -26,10 +26,12 @@ typedef struct s_stack
 int		is_duplicate(int argc, char **str_b);
 int		is_digit(int argc, char **argv);
 int		is_integer(int argc, char **argv);
-t_stack	*move_swap(t_stack *list);
-t_stack	*move_rotate(t_stack *list);
-t_stack	*move_reverse_rotate(t_stack *list);
+void	move_swap(t_stack **list);
+void	move_rotate(t_stack **list);
+void	move_reverse_rotate(t_stack **list);
 void	move_push(t_stack **list_a, t_stack **list_b);
-void    stack_init(t_stack *list, char **nbrs, int n);
+void    ps_stack_init(t_stack *list, char **nbrs, int n);
+void    ps_input_validate(int  n, char **nbrs);
+void    ps_stack_sort();
 
 #endif

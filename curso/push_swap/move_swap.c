@@ -12,17 +12,16 @@
 
 #include "push_swap.h"
 
-t_stack	*move_swap(t_stack *list)
+void	move_swap(t_stack **list)
 {
 	t_stack	*tmp;
 
-	tmp = list;
-	if (list->next != NULL)
+	tmp = *list;
+	if ((*list)->next != NULL)
 	{
-		list = list->next;
-		tmp->next = list->next;
-		list->next = tmp;
+		*list = (*list)->next;
+		tmp->next = (*list)->next;
+		(*list)->next = tmp;
 		write(1, "swap\n", 5);
 	}
-	return (list);
 }
