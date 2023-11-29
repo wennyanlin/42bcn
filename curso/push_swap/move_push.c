@@ -31,18 +31,9 @@ void	move_push(t_stack **list_a, t_stack **list_b)
 	t_stack	*tmp;
 	if (list_a)
 	{
-		if (list_b)
-		{
-			*list_b = *list_a;
-			*list_a = (*list_a)->next;
-			(*list_b)->next = NULL;
-		}
-		else
-		{
-			tmp = *list_b;
-			list_b = list_a;
-			*list_a = (*list_a)->next;
-			(*list_b)->next = tmp;
-		}
+		tmp = *list_a;
+		*list_a = (*list_a)->next;
+		tmp->next = *list_b;
+		*list_b = tmp;
 	}
 }
