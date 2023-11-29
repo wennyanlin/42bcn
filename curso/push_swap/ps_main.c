@@ -25,14 +25,14 @@ int	main(int argc, char **argv)
 		list = malloc(sizeof(t_stack));
 		ps_stack_init(list, argv, argc);
 
-		move_swap(&list);
+		//move_swap(&list);
 		//move_rotate(&list);
 		//move_reverse_rotate(&list);
 		//move_push(&list_a, &list_b);
 
 		list_a = list;
 		list_b = NULL;
-		
+		ps_stack_sort(&list_a, &list_b);
 		printf("------- STACK A -------\n\n");
 		while (list_a)
 		{

@@ -1,5 +1,66 @@
 #include "push_swap.h"
+/*
+void    ps_stack_sort(t_stack **list_a, t_stack **list_b)
+{
+    (void)*list_b;
+    //move_swap(list_a);
+    //move_reverse_rotate(list_a);
+    //move_push(list_a, list_b);
 
+
+    
+}*/
+
+//void    check_cost(t_list list_a, t_list list_b)
+
+
+
+typedef struct s_move
+{
+	int	ra;
+	int	rb;
+    int	rr;
+	int	rra;
+	int	rrb;
+	int	rrr;
+    int total;
+}	t_move;
+
+int main()
+{
+    t_move move;
+
+    move.ra = 123;
+    move.rb = 2123;
+    move.rr = 145623;
+    move.rra = -13;
+    move.rrb = 423;
+    move.rrr = -234123;
+    move.total =  move.ra + move.rb + move.rr +  move.rra + move.rrb + move.rrr;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//create a function to find the optimized node to move
 
 /*
 We want to push elements from A to B whilst

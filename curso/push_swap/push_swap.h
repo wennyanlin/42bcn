@@ -23,6 +23,17 @@ typedef struct s_stack
 	struct s_stack	*next;
 }	t_stack;
 
+typedef struct s_move
+{
+	int	ra;
+	int	rb;
+    int	rr;
+	int	rra;
+	int	rrb;
+	int	rrr;
+    int total;
+}	t_move;
+
 int		is_duplicate(int argc, char **str_b);
 int		is_digit(int argc, char **argv);
 int		is_integer(int argc, char **argv);
@@ -30,8 +41,8 @@ void	move_swap(t_stack **list);
 void	move_rotate(t_stack **list);
 void	move_reverse_rotate(t_stack **list);
 void	move_push(t_stack **list_a, t_stack **list_b);
-void    ps_stack_init(t_stack *list, char **nbrs, int n);
 void    ps_input_validate(int  n, char **nbrs);
-void    ps_stack_sort();
+void    ps_stack_sort(t_stack **list_a, t_stack **list_b);
+void    ps_stack_init(t_stack *list, char **nbrs, int n);
 
 #endif
