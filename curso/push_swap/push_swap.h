@@ -46,7 +46,9 @@ void    ps_input_validate(int  n, char **nbrs);
 void    ps_stack_sort(t_stack **list_a, t_stack **list_b);
 void    ps_stack_init(t_stack *list, char **nbrs, int n);
 int		find_max_nbr(t_stack *list);
+int		find_min_nbr(t_stack *list);
 void	sort_3(t_stack **list);
 void	print_stack(t_stack *list);
+void    sort(t_stack **list_a, t_stack **list_b);
 
 #endif

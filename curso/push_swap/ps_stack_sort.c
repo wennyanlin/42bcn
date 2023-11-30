@@ -51,6 +51,20 @@ int	find_max_nbr(t_stack *list)
 	return (max_nbr);
 }
 
+int find_min_nbr(t_stack *list)
+{
+    int min_nbr;
+
+    min_nbr = list->data;
+    while (list)
+    {
+        if (list->data < min_nbr)
+            min_nbr = list->data;
+        list = list->next;
+    }
+    return (min_nbr);
+}
+
 void	sort_3(t_stack **list)
 {
 	int	max_nbr;
@@ -70,6 +84,37 @@ void	sort_3(t_stack **list)
 	3 1 2  ra  1 2 3
 	3 2 1  ra  2 1 3 sa 1 2 3
 	*/
+}
+void	print_stack(t_stack *list)
+{
+	while (list)
+	{
+		printf("%d ", (list)->data);
+		list = (list)->next;
+	}
+}
+
+void    sort(t_stack **list_a, t_stack **list_b)
+{
+    int min_nbr;
+
+    min_nbr = find_min_nbr(*list_a);
+    while (*list_a !=NULL)
+    {
+        while ((*list_a)->data != min_nbr)
+        {
+            move_rotate(list_a);
+            printf("\nlist_a: ");
+            print_stack(*list_a);
+            *list_a = (*list_a)->next;
+        }
+        printf("\n");
+        move_push(list_a, list_b);
+        *list_a = (*list_a)->next;
+    }
+    //print_stack(*list_a);
+    while(*list_b != NULL)
+        move_push(list_b, list_a);
 }
 
 

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
+/*
 void	print_stack(t_stack *list)
 {
 	while (list)
@@ -19,7 +19,7 @@ void	print_stack(t_stack *list)
 		printf("%d ", (list)->data);
 		list = (list)->next;
 	}
-}
+}*/
 
 void	move_reverse_rotate(t_stack **list)
 {

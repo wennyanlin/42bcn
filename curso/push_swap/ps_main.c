@@ -32,7 +32,8 @@ int	main(int argc, char **argv)
 
 		list_a = list;
 		list_b = NULL;
-		sort_3(&list_a);
+		//sort_3(&list_a);
+		sort(&list_a, &list_b);
 		//ps_stack_sort(&list_a, &list_b);
 		//printf("max number:%d\n", find_max_nbr(list));
 
