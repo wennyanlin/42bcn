@@ -8,13 +8,11 @@ void    ps_stack_sort(t_stack **list_a, t_stack **list_b)
     //move_push(list_a, list_b);
 
 
-    
+
 }*/
 
 //void    check_cost(t_list list_a, t_list list_b)
-
-
-
+/*
 typedef struct s_move
 {
 	int	ra;
@@ -37,8 +35,52 @@ int main()
     move.rrb = 423;
     move.rrr = -234123;
     move.total =  move.ra + move.rb + move.rr +  move.rra + move.rrb + move.rrr;
+}*/
+
+int	find_max_nbr(t_stack *list)
+{
+	int max_nbr;
+
+	max_nbr = list->data;
+	while (list)
+	{
+		if (list->data > max_nbr)
+			max_nbr = list-> data;
+		list = list->next;
+	}
+	return (max_nbr);
 }
 
+void	sort_3(t_stack **list)
+{
+	int	max_nbr;
+//check size
+		max_nbr = find_max_nbr(*list);
+		if ((*list)->data == max_nbr)
+			move_rotate(list);
+		else if ((*list)->next->data == max_nbr)
+			move_reverse_rotate(list);
+		if ((*list)->data > (*list)->next->data)
+			move_swap(list);
+	/*
+	1 2 3
+	1 3 2  rra 2 1 3 sa 1 2 3
+	2 3 1  rra 1 2 3
+	2 1 3  sa  1 2 3
+	3 1 2  ra  1 2 3
+	3 2 1  ra  2 1 3 sa 1 2 3
+	*/
+}
+
+
+/*
+int	main(int argc, char **argv)
+{
+	t_stack	*list = NULL;
+	ps_stack_init(list, argv, argc);
+	printf("%d", find_max_nbr(list));
+
+}*/
 
 
 
@@ -94,17 +136,17 @@ When head A is in the middle
     2. is 6 > 7? No, rotate B
     3. is 6 > 3? Yes, push B
     4. undo all rotations (there were 2 rotations)
-    
+
     Total, it took 5 operations (2 rb, 1 pb, 2 rrb)
 
         1           2           3         4          5
         rb          rb         pb         rrb        rrb
-    A  B   ->   A  B   ->   A  B  ->   A  B  ->   A  B  ->   A  B 
-    ----   ->   ----   ->   ----  ->   ----  ->   ----  ->   ---- 
-    6  9   ->   6  7   ->   6  3  ->   2  6  ->   2  7  ->   2  9 
-    2  7   ->   2  3   ->   2  2  ->   3  3  ->   3  6  ->   3  7 
-    3  3   ->   3  2   ->   3  9  ->      2  ->      3  ->      6 
-       2   ->      9   ->      7  ->      9  ->      2  ->      4 
+    A  B   ->   A  B   ->   A  B  ->   A  B  ->   A  B  ->   A  B
+    ----   ->   ----   ->   ----  ->   ----  ->   ----  ->   ----
+    6  9   ->   6  7   ->   6  3  ->   2  6  ->   2  7  ->   2  9
+    2  7   ->   2  3   ->   2  2  ->   3  3  ->   3  6  ->   3  7
+    3  3   ->   3  2   ->   3  9  ->      2  ->      3  ->      6
+       2   ->      9   ->      7  ->      9  ->      2  ->      4
                                           7          9          3
 
 

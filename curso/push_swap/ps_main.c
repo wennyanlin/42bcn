@@ -32,7 +32,11 @@ int	main(int argc, char **argv)
 
 		list_a = list;
 		list_b = NULL;
-		ps_stack_sort(&list_a, &list_b);
+		sort_3(&list_a);
+		//ps_stack_sort(&list_a, &list_b);
+		//printf("max number:%d\n", find_max_nbr(list));
+
+		//move_reverse_rotate(&list_a);
 		printf("------- STACK A -------\n\n");
 		while (list_a)
 		{
@@ -42,7 +46,7 @@ int	main(int argc, char **argv)
 		printf("------- STACK B -------\n\n");
 		while (list_b)
 		{
-	
+
 			printf("%d\n", list_b->data);
 			list_b = list_b->next;
 		}
