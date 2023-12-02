@@ -50,5 +50,7 @@ int		find_min_nbr(t_stack *list);
 void	sort_3(t_stack **list);
 void	print_stack(t_stack *list);
 void    sort(t_stack **list_a, t_stack **list_b);
+void	ra(t_stack **list);
+void    sort_5(t_stack **list_a, t_stack **list_b);
 
 #endif

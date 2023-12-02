@@ -33,11 +33,10 @@ int	main(int argc, char **argv)
 		list_a = list;
 		list_b = NULL;
 		//sort_3(&list_a);
-		sort(&list_a, &list_b);
+		sort_5(&list_a, &list_b);
+		//sort(&list_a, &list_b);
 		//ps_stack_sort(&list_a, &list_b);
-		//printf("max number:%d\n", find_max_nbr(list));
 
-		//move_reverse_rotate(&list_a);
 		printf("------- STACK A -------\n\n");
 		while (list_a)
 		{

@@ -35,5 +35,6 @@ void	move_push(t_stack **list_a, t_stack **list_b)
 		*list_a = (*list_a)->next;
 		tmp->next = *list_b;
 		*list_b = tmp;
+		printf("pa\n");
 	}
 }

@@ -45,9 +45,13 @@ int	find_max_nbr(t_stack *list)
 	while (list)
 	{
 		if (list->data > max_nbr)
+        {
 			max_nbr = list-> data;
+            printf(" x:%d\n", list->data);
+        }
 		list = list->next;
 	}
+
 	return (max_nbr);
 }
 
@@ -68,23 +72,41 @@ int find_min_nbr(t_stack *list)
 void	sort_3(t_stack **list)
 {
 	int	max_nbr;
-//check size
-		max_nbr = find_max_nbr(*list);
-		if ((*list)->data == max_nbr)
-			move_rotate(list);
-		else if ((*list)->next->data == max_nbr)
-			move_reverse_rotate(list);
-		if ((*list)->data > (*list)->next->data)
-			move_swap(list);
-	/*
-	1 2 3
-	1 3 2  rra 2 1 3 sa 1 2 3
-	2 3 1  rra 1 2 3
-	2 1 3  sa  1 2 3
-	3 1 2  ra  1 2 3
-	3 2 1  ra  2 1 3 sa 1 2 3
-	*/
+
+	max_nbr = find_max_nbr(*list);
+	if ((*list)->data == max_nbr)
+		ra(list);
+	else if ((*list)->next->data == max_nbr)
+		move_reverse_rotate(list);
+	if ((*list)->data > (*list)->next->data)
+		move_swap(list);
+
 }
+ 
+void    sort_5(t_stack **list_a, t_stack **list_b)
+{
+    int min_nbr;
+
+    min_nbr = find_min_nbr(*list_a);
+    printf("%d\n", min_nbr);
+    while ((*list_a)->data != min_nbr)
+        ra(list_a);
+    move_push(list_a, list_b);
+
+    min_nbr = find_min_nbr(*list_a);
+        printf("%d\n", (*list_b)->data);
+    printf("%d\n", min_nbr);
+    while ((*list_a)->data != min_nbr)
+        ra(list_a);
+    move_push(list_a, list_b);
+
+    sort_3(list_a);
+
+    move_push(list_b, list_a);
+    move_push(list_b, list_a);
+
+}
+
 void	print_stack(t_stack *list)
 {
 	while (list)
@@ -98,21 +120,14 @@ void    sort(t_stack **list_a, t_stack **list_b)
 {
     int min_nbr;
 
-    min_nbr = find_min_nbr(*list_a);
-    while (*list_a !=NULL)
+    while (*list_a != NULL)
     {
-        while ((*list_a)->data != min_nbr)
-        {
-            move_rotate(list_a);
-            printf("\nlist_a: ");
-            print_stack(*list_a);
-            *list_a = (*list_a)->next;
-        }
-        printf("\n");
+        min_nbr = find_min_nbr(*list_a);
+        while (*list_a && (*list_a)->data != min_nbr)
+            ra(list_a);
         move_push(list_a, list_b);
-        *list_a = (*list_a)->next;
+        printf("\npb");
     }
-    //print_stack(*list_a);
     while(*list_b != NULL)
         move_push(list_b, list_a);
 }

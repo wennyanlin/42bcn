@@ -29,7 +29,7 @@ CFLAGS = -g -Wall -Werror -Wextra
 #	$(COMPILER) $(CFLAGS) -I $(INCLUDES) -c $< -o $(NAME)
 
 $(NAME): lib $(LIBFT) $(OBJS) $(INCLUDES) Makefile
-	$(COMPILER) $(SRCS) -L./libft -lft -g -fsanitize=address -o $(NAME)
+	$(COMPILER) $(SRCS) -L./libft -lft -g -o $(NAME) -fsanitize=address 
 
 lib:
 	$(MAKE) -C ./libft
