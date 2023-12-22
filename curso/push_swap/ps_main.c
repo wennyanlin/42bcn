@@ -51,5 +51,6 @@ int	main(int argc, char **argv)
 			list_b = list_b->next;
 		}
 	}
+	write_error();
 	return (0);
 }

@@ -38,6 +38,7 @@ typedef struct s_move
 int		is_duplicate(int argc, char **str_b);
 int		is_digit(int argc, char **argv);
 int		is_integer(int argc, char **argv);
+void	write_error(void);
 void	move_swap(t_stack **list);
 void	move_rotate(t_stack **list);
 void	move_reverse_rotate(t_stack **list);
