@@ -17,7 +17,7 @@ INCLUDES = push_swap.h
 LIBFT = ./libft/libft.a
 
 SRCS = ps_main.c move_swap.c move_rotate.c move_reverse_rotate.c \
-		move_push.c ps_input_validate.c ps_stack_init.c ps_stack_sort.c \
+		move_push.c ps_input_validate.c ps_stack_init.c ps_stack_sort.c utils.c\
 
 OBJS = $(SRCS:.c=.o)
 
@@ -37,7 +37,7 @@ lib:
 all: lib $(NAME)
 
 clean:
-		rm -f $(OBJS) 
+		rm -f $(OBJS)
 		$(MAKE) -C ./libft fclean
 
 fclean: clean

@@ -1,15 +1,5 @@
 #include "push_swap.h"
-/*
-void    ps_stack_sort(t_stack **list_a, t_stack **list_b)
-{
-    (void)*list_b;
-    //move_swap(list_a);
-    //move_reverse_rotate(list_a);
-    //move_push(list_a, list_b);
 
-
-
-}*/
 
 //void    check_cost(t_list list_a, t_list list_b)
 /*
@@ -37,18 +27,26 @@ int main()
     move.total =  move.ra + move.rb + move.rr +  move.rra + move.rrb + move.rrr;
 }*/
 
-int	find_max_nbr(t_stack *list)
+void	find_target_node(int node, t_stack *list_b)
 {
-	int max_nbr;
+	int	closest_small_node;
 
-	max_nbr = list->data;
-	while (list)
+	closest_small_node = list_b->data;
+	while (list_b)
 	{
-		if (list->data > max_nbr)
-			max_nbr = list-> data;
-		list = list->next;
+		if (list_b->data < node)
+		{
+			if (closest_small_node > node || list_b->data > closest_small_node)
+				closest_small_node = list_b->data;
+		}
+		else
+		{
+			if (closest_small_node > node && list_b->data > closest_small_node)
+				closest_small_node = list_b->data;
+		}
+		list_b = list_b->next;
 	}
-	return (max_nbr);
+	printf("\nnode : %d -> target node: %d\n", node, closest_small_node);
 }
 
 void	sort_3(t_stack **list)
@@ -62,25 +60,20 @@ void	sort_3(t_stack **list)
 			move_reverse_rotate(list);
 		if ((*list)->data > (*list)->next->data)
 			move_swap(list);
-	/*
-	1 2 3
-	1 3 2  rra 2 1 3 sa 1 2 3
-	2 3 1  rra 1 2 3
-	2 1 3  sa  1 2 3
-	3 1 2  ra  1 2 3
-	3 2 1  ra  2 1 3 sa 1 2 3
-	*/
 }
 
-
-/*
-int	main(int argc, char **argv)
+void	sort(t_stack **list_a, t_stack **list_b)
 {
-	t_stack	*list = NULL;
-	ps_stack_init(list, argv, argc);
-	printf("%d", find_max_nbr(list));
+	while (nbr_of_nodes(*list_a) > 3)
+	{
+		move_push(list_a, list_b);
+		find_target_node((*list_a)->data, *list_b);
+	}
+	sort_3(list_a);
+	while (nbr_of_nodes(*list_b) > 0)
+		move_push(list_b, list_a);
+}
 
-}*/
 
 
 
