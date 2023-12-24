@@ -49,5 +49,7 @@ void    ps_stack_init(t_stack *list, char **nbrs, int n);
 int		find_max_nbr(t_stack *list);
 void	sort_3(t_stack **list);
 void	print_stack(t_stack *list);
+int		nbr_of_nodes(t_stack *list_a);
+void	sort(t_stack **list_a, t_stack **list_b);
 
 #endif

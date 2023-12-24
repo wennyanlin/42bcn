@@ -29,7 +29,7 @@
 void	move_push(t_stack **list_a, t_stack **list_b)
 {
 	t_stack	*tmp;
-	if (list_a)
+	if (*list_a)
 	{
 		tmp = *list_a;
 		*list_a = (*list_a)->next;
