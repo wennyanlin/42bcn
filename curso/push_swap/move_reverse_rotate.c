@@ -16,7 +16,7 @@ void	print_stack(t_stack *list)
 {
 	while (list)
 	{
-		printf("%d ", (list)->data);
+		printf("\n%d->index:%d\n ", list->data, list->index);
 		list = (list)->next;
 	}
 }
