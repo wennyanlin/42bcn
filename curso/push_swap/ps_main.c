@@ -12,6 +12,15 @@
 
 #include "push_swap.h"
 
+void	print_stack(t_stack *list)
+{
+	while (list)
+	{
+		printf("\nnode: %d - %d", list->data, list->index);
+		list = (list)->next;
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	t_stack *list_a;

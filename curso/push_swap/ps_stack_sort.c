@@ -1,5 +1,30 @@
 #include "push_swap.h"
 
+int	push_a_to_b(int list_a_size, int list_b_size, t_stack **list_a, t_stack **list_b)
+{
+	while (list_a_size > 3)
+	{
+		move_push(list_a, list_b);
+		list_a_size--;
+		list_b_size++;
+		initialize_indexes(*list_a);
+		initialize_indexes(*list_b);
+
+		printf("\n------ stack b --");
+		print_stack(*list_b);
+		printf("\n-----------------\n");
+
+		find_target_node((*list_a)->data, *list_b);
+		calculate_moving_cost(list_a_size, list_b_size, 2, 3);
+	}
+	return (list_b_size);
+}
+
+void	print_moves(t_move test_move)
+{
+	printf("Total move: %d, ra: %d, rra: %d, rb: %d, rrb: %d\n", test_move.total, test_move.ra, test_move.rra, test_move.rb, test_move.rrb);
+}
+
 int	find_target_node(int a_node, t_stack *list_b)
 {
 	t_stack	*target_node;
@@ -24,7 +49,7 @@ int	find_target_node(int a_node, t_stack *list_b)
 		}
 		list_b = list_b->next;
 	}
-	printf("\nnode : %d -> target node: %d | index: %d\n", a_node, target_node->data, target_node->index);
+	printf("\nfind_target_node() ==> a_node : %d -> target node: %d - %d\n\n", a_node, target_node->data, target_node->index);
 	return (target_node->index);
 }
 
@@ -35,19 +60,31 @@ t_move	calculate_moving_cost(int list_a_size, int list_b_size, int a_index, int 
 	int 	middle_line_b;
 	t_move	move;
 
+	move.ra = 0;
+	move.rb = 0;
+	move.rr = 0;
+	move.rra = 0;
+	move.rrb = 0;
+	move.rrr = 0;
+
 	middle_line_a = list_a_size / 2;
 	middle_line_b = list_b_size / 2;
+	printf("a_index: %d, b_index: %d", a_index, b_index);
+	printf("\nline: A = %d, B = %d\n", middle_line_a, middle_line_b);
 	if (a_index <= middle_line_a)
 		move.ra = a_index;
-	else if (a_index > middle_line_a)
+	else
 		move.rra = list_a_size - a_index;
 	if (b_index <= middle_line_b)
 		move.rb = b_index;
-	else if (b_index > middle_line_b)
+	else
 		move.rrb = list_b_size - b_index;
 	move.total = move.ra + move.rb + move.rr + move.rra + move.rrb + move.rrr;
 	return (move);
 }
+
+
+
 // t_move	compare_moving_cost(t_stack *list_a)
 // {
 
@@ -71,31 +108,26 @@ void	sort(t_stack **list_a, t_stack **list_b)
 	int	list_a_size;
 	int	list_b_size;
 
-	t_move test_move;
-
 	list_a_size = stack_size(*list_a);
 	list_b_size = stack_size(*list_b);
-	while (list_a_size > 3)
-	{
-		move_push(list_a, list_b);
-		initialize_indexes(*list_a);
-		initialize_indexes(*list_b);
-		printf("------ stack b -------");
-		print_stack(*list_b);
-		printf("-------------");
-		find_target_node((*list_a)->data, *list_b);
-		test_move = calculate_moving_cost(list_a_size, list_b_size, 2, 3);
-		printf("Total: %d, ra: %d, rra: %d, rb: %d, rrb: %d", test_move.total, test_move.ra, test_move.rra, test_move.rb, test_move.rrb);
-		list_a_size--;
-		list_b_size++;
-	}
+	list_b_size = push_a_to_b(list_a_size, list_b_size, list_a, list_b);
+	//printf("after 1r loop\n\n");
 	sort_3(list_a);
+	initialize_indexes(*list_a);
+	initialize_indexes(*list_b);
+
+	printf("b_size: %d\n\n", list_b_size);
 	while (list_b_size > 0)
+	{
+		//printf("enter 2n loop\n\n");
 		move_push(list_b, list_a);
-		initialize_indexes(*list_a);
-		initialize_indexes(*list_b);
 		list_a_size++;
 		list_b_size--;
+		initialize_indexes(*list_a);
+		initialize_indexes(*list_b);
+		//printf("at the end of 2n loop\n\n");
+	}
+	printf("b_size: %d\n\n", list_b_size);
 }
 
 

@@ -12,14 +12,7 @@
 
 #include "push_swap.h"
 
-void	print_stack(t_stack *list)
-{
-	while (list)
-	{
-		printf("\n%d->index:%d\n ", list->data, list->index);
-		list = (list)->next;
-	}
-}
+
 
 void	move_reverse_rotate(t_stack **list)
 {
