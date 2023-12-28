@@ -1,5 +1,5 @@
 #include "push_swap.h"
-
+/*
 int	find_min_nbr(t_stack *list)
 {
 	int	min_nbr;
@@ -12,7 +12,7 @@ int	find_min_nbr(t_stack *list)
 		list = list->next;
 	}
 	return (min_nbr);
-}
+}*/
 
 int	find_max_nbr(t_stack *list)
 {

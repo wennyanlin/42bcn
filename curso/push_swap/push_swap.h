@@ -57,5 +57,7 @@ void	sort(t_stack **list_a, t_stack **list_b);
 void	initialize_indexes(t_stack *list);
 t_move	calculate_moving_cost(int list_a_size, int list_b_size, int a_index, int b_index);
 int		find_target_node(int a_node, t_stack *list_b);
+t_move	find_lowercost_node(t_stack *list_a, t_stack *list_b, int list_a_size, int list_b_size);
+void	print_moves(t_move test_move);
 
 #endif
