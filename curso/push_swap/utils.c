@@ -1,5 +1,5 @@
 #include "push_swap.h"
-
+/*
 int	find_min_nbr(t_stack *list)
 {
 	int	min_nbr;
@@ -12,7 +12,7 @@ int	find_min_nbr(t_stack *list)
 		list = list->next;
 	}
 	return (min_nbr);
-}
+}*/
 
 int	find_max_nbr(t_stack *list)
 {
@@ -28,7 +28,7 @@ int	find_max_nbr(t_stack *list)
 	return (max_nbr);
 }
 
-int	nbr_of_nodes(t_stack *list_a)
+int	stack_size(t_stack *list_a)
 {
 	int	i;
 
@@ -39,4 +39,17 @@ int	nbr_of_nodes(t_stack *list_a)
 		list_a = (list_a)->next;
 	}
 	return (i);
+}
+
+void	initialize_indexes(t_stack *list)
+{
+	int	index;
+
+	index = 0;
+	while (list)
+	{
+		list->index = index;
+		index++;
+		list = list->next;
+	}
 }

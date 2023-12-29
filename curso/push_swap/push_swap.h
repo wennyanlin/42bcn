@@ -17,12 +17,6 @@
 # include <stdlib.h>
 # include "./libft/libft.h"
 # include <stdio.h>
-typedef struct s_stack
-{
-	int				data;
-
-	struct s_stack	*next;
-}	t_stack;
 
 typedef struct s_move
 {
@@ -35,6 +29,15 @@ typedef struct s_move
     int total;
 }	t_move;
 
+typedef struct s_stack
+{
+	int				data;
+	int				index;
+
+	struct s_stack	*next;
+	struct s_move	curr_move;
+}	t_stack;
+
 int		is_duplicate(int argc, char **str_b);
 int		is_digit(int argc, char **argv);
 int		is_integer(int argc, char **argv);
@@ -44,12 +47,17 @@ void	move_rotate(t_stack **list);
 void	move_reverse_rotate(t_stack **list);
 void	move_push(t_stack **list_a, t_stack **list_b);
 void    ps_input_validate(int  n, char **nbrs);
-void    ps_stack_sort(t_stack **list_a, t_stack **list_b);
+//void    ps_stack_sort(t_stack **list_a, t_stack **list_b);
 void    ps_stack_init(t_stack *list, char **nbrs, int n);
 int		find_max_nbr(t_stack *list);
 void	sort_3(t_stack **list);
 void	print_stack(t_stack *list);
-int		nbr_of_nodes(t_stack *list_a);
+int		stack_size(t_stack *list_a);
 void	sort(t_stack **list_a, t_stack **list_b);
+void	initialize_indexes(t_stack *list);
+t_move	calculate_moving_cost(int list_a_size, int list_b_size, int a_index, int b_index);
+int		find_target_node(int a_node, t_stack *list_b);
+t_move	find_lowercost_node(t_stack *list_a, t_stack *list_b, int list_a_size, int list_b_size);
+void	print_moves(t_move test_move);
 
 #endif
