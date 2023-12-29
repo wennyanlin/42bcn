@@ -1,5 +1,7 @@
 #include "push_swap.h"
 
+
+
 int	push_a_to_b(int list_a_size, int list_b_size, t_stack **list_a, t_stack **list_b)
 {
 	while (list_a_size > 3)
@@ -14,7 +16,9 @@ int	push_a_to_b(int list_a_size, int list_b_size, t_stack **list_a, t_stack **li
 		print_stack(*list_b);
 		printf("\n-----------------\n");
 		//find_lowercost_node(*list_a, *list_b, list_a_size, list_b_size);
+		printf("\ncheapest:\n");
 		print_moves(find_lowercost_node(*list_a, *list_b, list_a_size, list_b_size));
+
 		//find_target_node((*list_a)->data, *list_b);
 		//calculate_moving_cost(list_a_size, list_b_size, 2, 3);
 	}
@@ -28,13 +32,14 @@ t_move	find_lowercost_node(t_stack *list_a, t_stack *list_b, int list_a_size, in
 	int		target_node_index;
 
 	lowercosts.total = -1;
+	initialize_indexes(list_a);
+	initialize_indexes(list_b);
 	while (list_a)
 	{
-		initialize_indexes(list_a);
-		initialize_indexes(list_b);
 		target_node_index = find_target_node(list_a->data, list_b);
+		print_stack(list_a);
 		costs = calculate_moving_cost(list_a_size, list_b_size, list_a->index, target_node_index);
-		if (lowercosts.total != -1 && costs.total < lowercosts.total)
+		if (lowercosts.total == -1 || costs.total < lowercosts.total)
 			lowercosts = costs;
 		print_moves(costs);
 		list_a = list_a->next;
@@ -81,7 +86,10 @@ int	find_target_node(int a_node, t_stack *list_b)
 	return (target_node->index);
 }
 
-
+/*
+1. fix moving cost calculation and test
+2.
+*/
 t_move	calculate_moving_cost(int list_a_size, int list_b_size, int a_index, int b_index)
 {
 	int 	middle_line_a;
@@ -98,7 +106,10 @@ t_move	calculate_moving_cost(int list_a_size, int list_b_size, int a_index, int 
 	middle_line_a = list_a_size / 2;
 	middle_line_b = list_b_size / 2;
 	if (a_index <= middle_line_a)
+	{
 		move.ra = a_index;
+		printf("\nset ra to %d - %d\n", move.ra, a_index);
+	}
 	else
 		move.rra = list_a_size - a_index;
 	if (b_index <= middle_line_b)
