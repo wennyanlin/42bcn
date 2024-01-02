@@ -1,40 +1,37 @@
 #include "push_swap.h"
 
+//add a parameter to differ/invert the 'move prints' when is executing from b to a
 void	execute_move(t_move move, t_stack **list_a, t_stack **list_b)
 {
 	while (move.ra > 0)
 	{
-		move_rotate(list_a);
+		move_ra(list_a);
 		move.ra--;
 	}
 	while (move.rb > 0)
 	{
-		move_rotate(list_b);
+		move_rb(list_b);
 		move.rb--;
 	}
 	while (move.rr > 0)
 	{
-		move_rotate(list_a);
-		move_rotate(list_b);
+		move_rr(list_a, list_b);
 		move.rr--;
-		printf("rr\n");
 	}
 	while (move.rra > 0)
 	{
-		move_reverse_rotate(list_a);
+		move_rra(list_a);
 		move.rra--;
 	}
 	while (move.rrb > 0)
 	{
-		move_reverse_rotate(list_b);
+		move_rrb(list_b);
 		move.rrb--;
 	}
 	while (move.rrr > 0)
 	{
-		move_reverse_rotate(list_a);
-		move_reverse_rotate(list_b);
+		move_rrr(list_a, list_b);
 		move.rrr--;
-		printf("rrr\n");
 	}
 }
 
@@ -49,6 +46,7 @@ void	push_a_to_b(t_stack **list_a, t_stack **list_b, int(f)(int, t_stack *), int
 	if (!*list_b)
 	{
 		move_push(list_a, list_b);
+		write(1, "pa\n", 3);
 		list_a_size--;
 		list_b_size++;
 	}
@@ -59,6 +57,7 @@ void	push_a_to_b(t_stack **list_a, t_stack **list_b, int(f)(int, t_stack *), int
 		lowercost_node_moves = find_lowercost_node(*list_a, *list_b, list_a_size, list_b_size, f);
 		execute_move(lowercost_node_moves, list_a, list_b);
 		move_push(list_a, list_b);
+
 		list_a_size--;
 		list_b_size++;
 		initialize_indexes(*list_a);

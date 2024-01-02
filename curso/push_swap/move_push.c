@@ -37,3 +37,10 @@ void	move_push(t_stack **list_a, t_stack **list_b)
 		*list_b = tmp;
 	}
 }
+
+// void	move_pa(t_stack **list_a, t_list **list_b)
+// {
+// 	move_push(list_a, );
+
+// 	write(1, "rra\n", 4);
+// }
