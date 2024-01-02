@@ -56,9 +56,10 @@ int		stack_size(t_stack *list_a);
 void	sort(t_stack **list_a, t_stack **list_b);
 void	initialize_indexes(t_stack *list);
 t_move	calculate_moving_cost(int list_a_size, int list_b_size, int a_index, int b_index);
-int		find_target_node(int a_node, t_stack *list_b);
-t_move	find_lowercost_node(t_stack *list_a, t_stack *list_b, int list_a_size, int list_b_size);
+int		find_target_node_in_b(int a_node, t_stack *list_b);
+int		find_target_node_in_a(int b_node, t_stack *list_a);
+t_move	find_lowercost_node(t_stack *list_a, t_stack *list_b, int list_a_size, int list_b_size, int(f)(int, t_stack *));
 void	print_moves(t_move test_move);
-int		push_a_to_b(int list_a_size, int list_b_size, t_stack **list_a, t_stack **list_b);
+void	push_a_to_b(t_stack **list_a, t_stack **list_b, int(f)(int, t_stack *), int	push_until);
 void	execute_move(t_move move, t_stack **list_a, t_stack **list_b);
 #endif
