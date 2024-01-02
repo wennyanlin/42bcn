@@ -24,34 +24,38 @@ void	execute_move(t_move move, t_stack **list_a, t_stack **list_b)
 	}
 }
 
-int	push_a_to_b(int list_a_size, int list_b_size, t_stack **list_a, t_stack **list_b)
+void	push_a_to_b(t_stack **list_a, t_stack **list_b, int(f)(int, t_stack *), int	push_until)
 {
 	t_move	lowercost_node_moves;
+	int		list_a_size;
+	int		list_b_size;
 
-	move_push(list_a, list_b);
-	list_a_size--;
-	list_b_size++;
+	list_a_size = stack_size(*list_a);
+	list_b_size = stack_size(*list_b);
+	if (!*list_b)
+	{
+		move_push(list_a, list_b);
+		list_a_size--;
+		list_b_size++;
+	}
 	initialize_indexes(*list_a);
 	initialize_indexes(*list_b);
-	while (list_a_size > 3)
+	while (list_a_size > push_until)
 	{
-		lowercost_node_moves = find_lowercost_node(*list_a, *list_b, list_a_size, list_b_size);
-		printf("\ncheapest:\n");
-		print_moves(lowercost_node_moves);
+		lowercost_node_moves = find_lowercost_node(*list_a, *list_b, list_a_size, list_b_size, f);
 		execute_move(lowercost_node_moves, list_a, list_b);
 		move_push(list_a, list_b);
 		list_a_size--;
 		list_b_size++;
 		initialize_indexes(*list_a);
 		initialize_indexes(*list_b);
-		printf("\n------ stack b --");
-		print_stack(*list_b);
-		printf("\n-----------------\n");
+		// printf("\n------ stack b --");
+		// print_stack(*list_b);
+		// printf("\n-----------------\n");
 	}
-	return (list_b_size);
 }
 
-t_move	find_lowercost_node(t_stack *list_a, t_stack *list_b, int list_a_size, int list_b_size)
+t_move	find_lowercost_node(t_stack *list_a, t_stack *list_b, int list_a_size, int list_b_size, int (f)(int, t_stack *))
 {
 	t_move	lowercosts;
 	t_move	costs;
@@ -62,7 +66,7 @@ t_move	find_lowercost_node(t_stack *list_a, t_stack *list_b, int list_a_size, in
 	initialize_indexes(list_b);
 	while (list_a)
 	{
-		target_node_index = find_target_node(list_a->data, list_b);
+		target_node_index = f(list_a->data, list_b);
 		costs = calculate_moving_cost(list_a_size, list_b_size, list_a->index, target_node_index);
 		if (lowercosts.total == -1 || costs.total < lowercosts.total)
 			lowercosts = costs;
@@ -76,7 +80,31 @@ void	print_moves(t_move test_move)
 	printf("Total move: %d, ra: %d, rra: %d, rb: %d, rrb: %d\n", test_move.total, test_move.ra, test_move.rra, test_move.rb, test_move.rrb);
 }
 
-int	find_target_node(int a_node, t_stack *list_b)
+int	find_target_node_in_a(int b_node, t_stack *list_a)
+{
+	t_stack	*target_a_node;
+	t_stack	*curr_a_node;
+
+	target_a_node = list_a;
+	curr_a_node = list_a;
+	while (curr_a_node)
+	{
+		if (curr_a_node->data > b_node) // close bigger node
+		{
+			if (curr_a_node->data < target_a_node->data || target_a_node->data < b_node)
+				target_a_node = curr_a_node;
+		}
+		else //smallest node
+		{
+			if (curr_a_node->data < target_a_node->data && target_a_node->data < b_node)
+				target_a_node = curr_a_node;
+		}
+		curr_a_node = curr_a_node->next;
+	}
+	return (target_a_node->index);
+}
+
+int	find_target_node_in_b(int a_node, t_stack *list_b)
 {
 	t_stack	*target_node;
 	t_stack	*curr_node;
@@ -134,7 +162,7 @@ t_move	calculate_moving_cost(int list_a_size, int list_b_size, int a_index, int 
 void	sort_3(t_stack **list)
 {
 	int	max_nbr;
-//check size
+
 		max_nbr = find_max_nbr(*list);
 		if ((*list)->data == max_nbr)
 			move_rotate(list);
@@ -146,49 +174,12 @@ void	sort_3(t_stack **list)
 
 void	sort(t_stack **list_a, t_stack **list_b)
 {
-	int	list_a_size;
-	int	list_b_size;
-
-	list_a_size = stack_size(*list_a);
-	list_b_size = stack_size(*list_b);
-	list_b_size = push_a_to_b(list_a_size, list_b_size, list_a, list_b);
-	//printf("after 1r loop\n\n");
-
+	push_a_to_b(list_a, list_b, find_target_node_in_b, 3);
 	sort_3(list_a);
 	initialize_indexes(*list_a);
 	initialize_indexes(*list_b);
-	// while (list_b_size > 0)
-	// {
-	// 	//printf("enter 2n loop\n\n");
-	// 	move_push(list_b, list_a);
-	// 	list_a_size++;
-	// 	list_b_size--;
-	// 	initialize_indexes(*list_a);
-	// 	initialize_indexes(*list_b);
-
-	// }
+	push_a_to_b(list_b, list_a, find_target_node_in_a, 0);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //create a function to find the optimized node to move
 

@@ -35,9 +35,6 @@ int	main(int argc, char **argv)
 		list_b = NULL;
 		sort(&list_a, &list_b);
 
-
-		printf("\n\n------- SIZE  A -------\n\n");
-		printf("%i", stack_size(list_a));
 		printf("\n\n------- STACK A -------\n\n");
 		print_stack(list_a);
 		printf("\n\n------- STACK B -------\n\n");
