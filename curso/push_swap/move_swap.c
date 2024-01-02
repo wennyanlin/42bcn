@@ -22,6 +22,6 @@ void	move_swap(t_stack **list)
 		*list = (*list)->next;
 		tmp->next = (*list)->next;
 		(*list)->next = tmp;
-		write(1, "swap\n", 5);
+		write(1, "sa\n", 5);
 	}
 }

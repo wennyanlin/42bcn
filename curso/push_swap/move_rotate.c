@@ -29,9 +29,22 @@ void	move_rotate(t_stack **list)
 
 		//return(head);
 }
-/*
-t_stack *ra(t_stack *a)
+
+void	move_ra(t_stack **list)
 {
-	move_rotate();
+	move_rotate(list);
 	write(1, "ra\n", 3);
-}*/
+}
+
+void	move_rb(t_stack **list)
+{
+	move_rotate(list);
+	write(1, "rb\n", 3);
+}
+
+void	move_rr(t_stack **list_a, t_stack **list_b)
+{
+	move_rotate(list_a);
+	move_rotate(list_b);
+	write(1, "rr\n", 3);
+}
