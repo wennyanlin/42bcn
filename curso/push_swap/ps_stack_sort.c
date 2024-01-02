@@ -1,5 +1,7 @@
 #include "push_swap.h"
 
+
+
 void	execute_move(t_move move, t_stack **list_a, t_stack **list_b)
 {
 	while (move.ra > 0)
@@ -179,6 +181,30 @@ void	sort(t_stack **list_a, t_stack **list_b)
 	initialize_indexes(*list_a);
 	initialize_indexes(*list_b);
 	push_a_to_b(list_b, list_a, find_target_node_in_a, 0);
+	rotate_smallest_to_top(list_a);
+}
+
+void	rotate_smallest_to_top(t_stack **list_a)
+{
+	int	i;
+	t_stack	*tmp;
+
+	i = 1;
+	tmp = *list_a;
+
+	while (tmp && tmp->data < tmp->next->data)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	if (tmp && tmp->data > tmp->next->data)
+	{
+		while (i > 0)
+		{
+			move_rotate(list_a);
+			i--;
+		}
+	}
 }
 
 //create a function to find the optimized node to move
