@@ -1,16 +1,22 @@
 #include "push_swap.h"
 
 //add a parameter to differ/invert the 'move prints' when is executing from b to a
-void	execute_move(t_move move, t_stack **list_a, t_stack **list_b)
+void	execute_move(t_move move, t_stack **list_a, t_stack **list_b, int push_until)
 {
 	while (move.ra > 0)
 	{
-		move_ra(list_a);
+		if (push_until == 3)
+			move_ra(list_a);
+		else if (push_until == 0)
+			move_rb(list_a);
 		move.ra--;
 	}
 	while (move.rb > 0)
 	{
-		move_rb(list_b);
+		if (push_until == 3)
+			move_rb(list_b);
+		else if (push_until == 0)
+			move_ra(list_b);
 		move.rb--;
 	}
 	while (move.rr > 0)
@@ -20,12 +26,18 @@ void	execute_move(t_move move, t_stack **list_a, t_stack **list_b)
 	}
 	while (move.rra > 0)
 	{
-		move_rra(list_a);
+		if (push_until == 3)
+			move_rra(list_a);
+		else if (push_until == 0)
+			move_rrb(list_a);
 		move.rra--;
 	}
 	while (move.rrb > 0)
 	{
-		move_rrb(list_b);
+		if (push_until == 3)
+			move_rrb(list_b);
+		else if (push_until == 0)
+			move_rra(list_b);
 		move.rrb--;
 	}
 	while (move.rrr > 0)
@@ -55,7 +67,7 @@ void	push_a_to_b(t_stack **list_a, t_stack **list_b, int(f)(int, t_stack *), int
 	while (list_a_size > push_until)
 	{
 		lowercost_node_moves = find_lowercost_node(*list_a, *list_b, list_a_size, list_b_size, f);
-		execute_move(lowercost_node_moves, list_a, list_b);
+		execute_move(lowercost_node_moves, list_a, list_b, push_until);
 		move_push(list_a, list_b);
 		if (push_until == 3)
 			write(1, "pb\n", 3);
@@ -79,7 +91,7 @@ t_move	find_lowercost_node(t_stack *list_a, t_stack *list_b, int list_a_size, in
 	initialize_indexes(list_b);
 	while (list_a)
 	{
-		target_node_index = f(list_a->data, list_b);
+		target_node_index = f(list_a->data, list_b);//find the target node
 		costs = calculate_moving_cost(list_a_size, list_b_size, list_a->index, target_node_index);
 		if (lowercosts.total == -1 || costs.total < lowercosts.total)
 			lowercosts = costs;
