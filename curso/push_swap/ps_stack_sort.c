@@ -46,7 +46,7 @@ void	push_a_to_b(t_stack **list_a, t_stack **list_b, int(f)(int, t_stack *), int
 	if (!*list_b)
 	{
 		move_push(list_a, list_b);
-		write(1, "pa\n", 3);
+		write(1, "pb\n", 3);
 		list_a_size--;
 		list_b_size++;
 	}
@@ -57,7 +57,10 @@ void	push_a_to_b(t_stack **list_a, t_stack **list_b, int(f)(int, t_stack *), int
 		lowercost_node_moves = find_lowercost_node(*list_a, *list_b, list_a_size, list_b_size, f);
 		execute_move(lowercost_node_moves, list_a, list_b);
 		move_push(list_a, list_b);
-
+		if (push_until == 3)
+			write(1, "pb\n", 3);
+		else if(push_until == 0)
+			write(1, "pa\n", 3);
 		list_a_size--;
 		list_b_size++;
 		initialize_indexes(*list_a);
@@ -192,9 +195,9 @@ void	sort_3(t_stack **list)
 
 		max_nbr = find_max_nbr(*list);
 		if ((*list)->data == max_nbr)
-			move_rotate(list);
+			move_ra(list);
 		else if ((*list)->next->data == max_nbr)
-			move_reverse_rotate(list);
+			move_rra(list);
 		if ((*list)->data > (*list)->next->data)
 			move_swap(list);
 }
@@ -226,7 +229,7 @@ void	rotate_smallest_to_top(t_stack **list_a)
 	{
 		while (i > 0)
 		{
-			move_rotate(list_a);
+			move_ra(list_a);
 			i--;
 		}
 	}
