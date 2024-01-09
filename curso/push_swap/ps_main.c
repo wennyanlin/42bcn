@@ -33,7 +33,20 @@ int	main(int argc, char **argv)
 		list_a = malloc(sizeof(t_stack));
 		ps_stack_init(list_a, argv, argc);
 		list_b = NULL;
-		sort(&list_a, &list_b);
+		if (stack_size(list_a) == 1)
+			return (0);
+		else if (stack_size(list_a) == 2)
+		{
+			rotate_smallest_to_top(&list_a);
+			return (0);
+		}
+		else if (stack_size(list_a) == 3)
+		{
+			sort_3(&list_a);
+			return (0);
+		}
+		else
+			sort(&list_a, &list_b);
 
 		printf("\n\n------- STACK A -------\n\n");
 		print_stack(list_a);
