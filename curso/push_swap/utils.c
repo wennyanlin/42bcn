@@ -53,3 +53,17 @@ void	initialize_indexes(t_stack *list)
 		list = list->next;
 	}
 }
+
+bool	is_stack_sorted(t_stack **list)
+{
+	t_stack	*list_cpy;
+
+	list_cpy = *list;
+	while (list_cpy && list_cpy->next)
+	{
+		if (list_cpy->data > list_cpy->next->data)
+			return false;
+		list_cpy = list_cpy->next;
+	}
+	return true;
+}
