@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include "./libft/libft.h"
 # include <stdio.h>
+# include <stdbool.h>
 
 typedef struct s_move
 {
@@ -69,5 +70,6 @@ void	push_a_to_b(t_stack **list_a, t_stack **list_b, int(f)(int, t_stack *), int
 void	execute_move(t_move move, t_stack **list_a, t_stack **list_b, int push_until);
 void	rotate_smallest_to_top(t_stack **list_a);
 t_move	optimize_moving_cost(t_move move);
+bool	is_stack_sorted(t_stack **list);
 
 #endif
