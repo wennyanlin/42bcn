@@ -21,17 +21,22 @@ void	print_stack(t_stack *list)
 	}
 }
 
+
+
 int	main(int argc, char **argv)
 {
 	t_stack *list_a;
 	t_stack *list_b;
+	char	**input = argv;
 
 	if (argc > 1)
 	{
-		ps_input_validate(argc, argv);
+		if (argc == 2)
+			input = ps_split(argv[1], ' ');
+		ps_input_validate(argc, input);
 		list_a = NULL;
 		list_a = malloc(sizeof(t_stack));
-		ps_stack_init(list_a, argv, argc);
+		ps_stack_init(list_a, input, argc);
 		list_b = NULL;
 		if (is_stack_sorted(&list_a) == true)
 			return (0);
@@ -55,8 +60,6 @@ int	main(int argc, char **argv)
 		printf("\n\n------- STACK B -------\n\n");
 		print_stack(list_b);
 	}
-	else
-		write_error();
 	return (0);
 }
 

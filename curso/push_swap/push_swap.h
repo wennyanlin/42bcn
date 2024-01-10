@@ -71,5 +71,8 @@ void	execute_move(t_move move, t_stack **list_a, t_stack **list_b, int push_unti
 void	rotate_smallest_to_top(t_stack **list_a);
 t_move	optimize_moving_cost(t_move move);
 bool	is_stack_sorted(t_stack **list);
+char	**ps_split(char *array, char separator);
+int		ps_count_words(char *array, char separator);
+char	*get_next_word(char *array, char separator);
 
 #endif
