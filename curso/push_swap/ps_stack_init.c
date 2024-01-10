@@ -15,12 +15,12 @@ void    ps_stack_init(t_stack *list, char **nbrs, int n)
         //-----------------------------------
 		list->data = ft_atoi(nbrs[i]);
 		if (n > 2)
-	{
-		list->next = malloc(sizeof(t_stack));
-		list = list->next;
-	}
-	i++;
-	n--;
+		{
+			list->next = malloc(sizeof(t_stack));
+			list = list->next;
+		}
+		i++;
+		n--;
     }
 	list->next = NULL;
 	list = tmp;

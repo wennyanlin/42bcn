@@ -18,6 +18,7 @@ LIBFT = ./libft/libft.a
 
 SRCS = ps_main.c move_swap.c move_rotate.c move_reverse_rotate.c \
 		move_push.c ps_input_validate.c ps_stack_init.c ps_stack_sort.c utils.c\
+		ps_split.c\
 
 OBJS = $(SRCS:.c=.o)
 
