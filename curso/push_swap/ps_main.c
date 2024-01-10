@@ -21,25 +21,35 @@ void	print_stack(t_stack *list)
 	}
 }
 
+int	calculate_array_size(char **array)
+{
+	int	i;
 
+	i = 0;
+	while (array[i])
+		i++;
+	return (i);
+}
 
 int	main(int argc, char **argv)
 {
 	t_stack *list_a;
 	t_stack *list_b;
-	char	**input = argv;
 
 	if (argc > 1)
 	{
 		if (argc == 2)
-			input = ps_split(argv[1], ' ');
-		ps_input_validate(argc, input);
+			argv = ps_split(argv[1], ' ');
+		argc = calculate_array_size(argv);
+		ps_input_validate(argc, argv);
 		list_a = NULL;
 		list_a = malloc(sizeof(t_stack));
-		ps_stack_init(list_a, input, argc);
+		ps_stack_init(list_a, argv, argc);
 		list_b = NULL;
 		if (is_stack_sorted(&list_a) == true)
+		{
 			return (0);
+		}
 		else
 		{
 			if (stack_size(list_a) == 2)
@@ -55,10 +65,10 @@ int	main(int argc, char **argv)
 			else
 				sort(&list_a, &list_b);
 		}
-		printf("\n\n------- STACK A -------\n\n");
-		print_stack(list_a);
-		printf("\n\n------- STACK B -------\n\n");
-		print_stack(list_b);
+		// printf("\n\n------- STACK A -------\n\n");
+		// print_stack(list_a);
+		// printf("\n\n------- STACK B -------\n\n");
+		// print_stack(list_b);
 	}
 	return (0);
 }

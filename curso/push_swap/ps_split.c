@@ -60,10 +60,10 @@ char	**ps_split(char *array, char separator)
 	if (!array)
 		return (0);
 	words = ps_count_words(array, ' ');
-	result_array = malloc(sizeof(char*) * (words + 1));
+	result_array = malloc(sizeof(char*) * (words + 2));
 	if (!result_array)
 		return (0);
-	while (i < words)
+	while (i < (words + 1))
 	{
 		if (i == 0)
 		{
@@ -87,7 +87,7 @@ char	**ps_split(char *array, char separator)
 
 // int	main()
 // {
-// 	char **word = ps_split("101 23 476 98 5 246", ' ');
+// 	char **word = ps_split("123 456 3 2 45 34", ' ');
 // 	int	i = 0;
 // 	while (word[i])
 // 	{

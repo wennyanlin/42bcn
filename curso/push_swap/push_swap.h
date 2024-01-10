@@ -74,5 +74,6 @@ bool	is_stack_sorted(t_stack **list);
 char	**ps_split(char *array, char separator);
 int		ps_count_words(char *array, char separator);
 char	*get_next_word(char *array, char separator);
+int		calculate_array_size(char **array);
 
 #endif
