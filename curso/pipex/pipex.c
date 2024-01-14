@@ -46,6 +46,31 @@ char	*string_concat(char *path, char *cmd)
 	return (result_path);
 }
 
+char	*find_command_path(char *command_paths, char *cmd)
+{
+	char 	**split_paths;
+	char	*cmd_path;
+	int		i;
+
+	i = 0;
+	split_paths = split(command_paths, ':');
+	while (split_paths[i])
+	{
+		cmd_path = string_concat(split_paths[i], cmd);
+		if (access(cmd_path, X_OK))
+		{
+			printf("path: '%s'\n", cmd_path);
+			return (split_paths[i]);
+		}
+		i++;
+	}
+	return (NULL);
+}
+
+// char	*ft_getenv()
+
+//how does pipe behave when file can't access?
+
 char	*read_input(char *infile_name)
 	{
 		int		fd;
@@ -65,8 +90,12 @@ char	*execute_cmd1(char *cmd1)
 {
 	char	**args;
 	char	*path;
+	char	*paths;
 
+// TODO: Replace hard-coded paths with PATH environment variable
+	paths = "/Users/wen/.nvm/versions/node/v16.19.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/wen/.nvm/versions/node/v16.19.0/bin";
 	args = split(cmd1, ' ');
+	find_command_path(paths, cmd1);
 	path = string_concat("/bin/", args[0]);
 	execve(path, args, 0);
 	return (0);
@@ -88,20 +117,29 @@ char	*execute_cmd1(char *cmd1)
  * - how do we know the command is!!!
 */
 
-int	main(int argc, char **argv)
+int	main(/*int argc, char **argv*/)
 {
 	// char	*infile;
 	// char	*outfile;
 	// char	*cmd1;
-	char	*cmd2;
+	// char	*cmd2;
+	char 	*paths = "/Users/wen/.nvm/versions/node/v16.19.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/wen/.nvm/versions/node/v16.19.0/bin";
+	char **result;
+	int		i = 0;
 
-	if (argc != 5)
-		return (0);
+	// if (argc != 5)
+	// 	return (0);
 	// infile = argv[1];
 	// cmd1 = argv[2];
-	cmd2 = argv[3];
+	// cmd2 = argv[3];
 	// outfile = argv[4];
 	// read_input(infile);
 	// execute_cmd1(cmd1);
-	execute_cmd1(cmd2);
+	// execute_cmd1(cmd2);
+	result = split(paths, ':');
+	while (i < 7)
+	{
+		printf("%s\n", result[i]);
+		i++;
+	}
 }
