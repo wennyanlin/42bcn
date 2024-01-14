@@ -2,16 +2,23 @@ NAME = pipex
 
 INCLUDES = pipex.h
 
-SRCS = \
+SRCS = pipex.c split.c\
 
-OBJS = $()
+OBJS = $(SRCS:.c=.o)
 
+COMPILER = gcc
+
+CFLAGS = -g -Wall -Werror -Wextra
+
+$(NAME): $(OBJS) $(INCLUDES) Makefile
+		$(COMPILER) $(SRCS) -g -fsanitize=address -o $(NAME)
 
 all:
 	$(MAKE)
 
 clean:
 		rm -f $(OBJS)
+		$(MAKE) fclean
 
 fclean:	clean
 		rm -f $(NAME)
