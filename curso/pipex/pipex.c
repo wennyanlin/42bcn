@@ -9,41 +9,39 @@
 		//-> 4. output the final result
 #include "pipex.h"
 
-size_t	ft_strlen(char *str)
+char	*redirect_stdin(char *infile)
 {
-	size_t	i;
+	int	fd;
+	int	pipefd[2];
+	int	pid;
 
-	i = 0;
-	while (str[i])
-		i++;
-	return(i);
-}
-
-char	*string_concat(char *path, char *cmd)
-{
-	char 	*result_path;
-	size_t	path_len;
-	size_t	cmd_len;
-	size_t	total_len;
-	size_t	i;
-
-	path_len = ft_strlen(path);
-	cmd_len = ft_strlen(cmd);
-	total_len = path_len + cmd_len;
-	result_path = malloc(sizeof(char) * (total_len + 1));
-	if (!result_path)
-		return (NULL);
-	i = 0;
-	while (i < path_len)
+	fd = open(infile, O_RDONLY);
+	if (fd == -1)
 	{
-		result_path[i] = path[i];
-		i++;
+		perror("Error open!");
+		return (1);
 	}
-	cmd_len = 0;
-	while (i < total_len)
-		result_path[i++] = cmd[cmd_len++];
-	result_path[i] = '\0';
-	return (result_path);
+	if (dup2(fd, STDIN_FILENO) == -1)
+	{
+		perror("Error dup2");
+		close(fd);
+		return (1);
+	}
+	close(fd);
+	if (pipe(pipefd[2]) == -1)
+	{
+		perror("Error pipe");
+		return (1);
+	}
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("Error Forking");
+		exit(EXIT_FAILURE);
+	}
+
+
+
 }
 
 char	*find_command_path(char *command_paths, char *cmd)
@@ -60,7 +58,6 @@ char	*find_command_path(char *command_paths, char *cmd)
 		cmd_path = string_concat(cmd_path, cmd);
 		if (access(cmd_path, X_OK) == 0)
 		{
-			printf("path: '%s'\n", cmd_path);
 			return (cmd_path);
 		}
 		i++;
@@ -84,7 +81,7 @@ char	*read_input(char *infile_name)
 		bytes_read = read(fd, buffer , 99);
 		buffer[bytes_read] = '\0';
 		printf("%s", buffer);
-		return (0);
+		return (buffer);
 	}
 
 char	*execute_cmd1(char *cmd1)
@@ -128,7 +125,8 @@ int	main(int argc, char **argv)
 	// cmd1 = argv[2];
 	cmd2 = argv[3];
 	// outfile = argv[4];
-	read_input(infile);
+	// read_input(infile);
 	// execute_cmd1(cmd1);
 	execute_cmd1(cmd2);
+
 }
