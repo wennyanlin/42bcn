@@ -56,11 +56,12 @@ char	*find_command_path(char *command_paths, char *cmd)
 	split_paths = split(command_paths, ':');
 	while (split_paths[i])
 	{
-		cmd_path = string_concat(split_paths[i], cmd);
-		if (access(cmd_path, X_OK))
+		cmd_path = string_concat(split_paths[i], "/");
+		cmd_path = string_concat(cmd_path, cmd);
+		if (access(cmd_path, X_OK) == 0)
 		{
 			printf("path: '%s'\n", cmd_path);
-			return (split_paths[i]);
+			return (cmd_path);
 		}
 		i++;
 	}
@@ -80,7 +81,7 @@ char	*read_input(char *infile_name)
 		fd = open(infile_name, O_RDWR);
 		if (fd == -1)
 			return (NULL);
-		bytes_read = read(fd, buffer , 100);
+		bytes_read = read(fd, buffer , 99);
 		buffer[bytes_read] = '\0';
 		printf("%s", buffer);
 		return (0);
@@ -95,8 +96,7 @@ char	*execute_cmd1(char *cmd1)
 // TODO: Replace hard-coded paths with PATH environment variable
 	paths = "/Users/wen/.nvm/versions/node/v16.19.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/wen/.nvm/versions/node/v16.19.0/bin";
 	args = split(cmd1, ' ');
-	find_command_path(paths, cmd1);
-	path = string_concat("/bin/", args[0]);
+	path = find_command_path(paths, args[0]);
 	execve(path, args, 0);
 	return (0);
 }
@@ -106,8 +106,6 @@ char	*execute_cmd1(char *cmd1)
 //execute cmd2
 //output the result in the outfile
 /**
- *
- * - be careful with the static variable in split
  * - figure out how to write to stdin for program/process executed by execve
  * - figure out how to pass information between two programs/processes executed by execve
  * - be careful with execve
@@ -117,29 +115,20 @@ char	*execute_cmd1(char *cmd1)
  * - how do we know the command is!!!
 */
 
-int	main(/*int argc, char **argv*/)
+int	main(int argc, char **argv)
 {
-	// char	*infile;
+	char	*infile;
 	// char	*outfile;
 	// char	*cmd1;
-	// char	*cmd2;
-	char 	*paths = "/Users/wen/.nvm/versions/node/v16.19.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/wen/.nvm/versions/node/v16.19.0/bin";
-	char **result;
-	int		i = 0;
+	char	*cmd2;
 
-	// if (argc != 5)
-	// 	return (0);
-	// infile = argv[1];
+	if (argc != 5)
+		return (0);
+	infile = argv[1];
 	// cmd1 = argv[2];
-	// cmd2 = argv[3];
+	cmd2 = argv[3];
 	// outfile = argv[4];
-	// read_input(infile);
+	read_input(infile);
 	// execute_cmd1(cmd1);
-	// execute_cmd1(cmd2);
-	result = split(paths, ':');
-	while (i < 7)
-	{
-		printf("%s\n", result[i]);
-		i++;
-	}
+	execute_cmd1(cmd2);
 }
