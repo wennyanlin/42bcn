@@ -9,11 +9,13 @@
 		//-> 4. output the final result
 #include "pipex.h"
 
-char	*redirect_stdin(char *infile)
+int	redirect_stdin(char *infile, char *cmd1)
 {
-	int	fd;
-	int	pipefd[2];
-	int	pid;
+	int		fd;
+	int		pipefd[2];
+	int		pid;
+	//char	buffer[100];
+	//int		count = 0;
 
 	fd = open(infile, O_RDONLY);
 	if (fd == -1)
@@ -28,7 +30,7 @@ char	*redirect_stdin(char *infile)
 		return (1);
 	}
 	close(fd);
-	if (pipe(pipefd[2]) == -1)
+	if (pipe(pipefd) == -1)
 	{
 		perror("Error pipe");
 		return (1);
@@ -39,9 +41,17 @@ char	*redirect_stdin(char *infile)
 		perror("Error Forking");
 		exit(EXIT_FAILURE);
 	}
-
-
-
+	else if (pid == 0)
+	{
+		close(pipefd[1]);
+		execute_cmd1(cmd1);
+	}
+	// else
+	// {
+	// 	close(pipefd[[1]]);
+	// 	write()
+	// }
+	return (0);
 }
 
 char	*find_command_path(char *command_paths, char *cmd)
@@ -69,7 +79,7 @@ char	*find_command_path(char *command_paths, char *cmd)
 
 //how does pipe behave when file can't access?
 
-char	*read_input(char *infile_name)
+void	read_input(char *infile_name)
 	{
 		int		fd;
 		char	buffer[100];
@@ -77,11 +87,10 @@ char	*read_input(char *infile_name)
 
 		fd = open(infile_name, O_RDWR);
 		if (fd == -1)
-			return (NULL);
+			return ;
 		bytes_read = read(fd, buffer , 99);
 		buffer[bytes_read] = '\0';
 		printf("%s", buffer);
-		return (buffer);
 	}
 
 char	*execute_cmd1(char *cmd1)
@@ -116,17 +125,17 @@ int	main(int argc, char **argv)
 {
 	char	*infile;
 	// char	*outfile;
-	// char	*cmd1;
-	char	*cmd2;
+	char	*cmd1;
+	// char	*cmd2;
 
 	if (argc != 5)
 		return (0);
 	infile = argv[1];
-	// cmd1 = argv[2];
-	cmd2 = argv[3];
+	cmd1 = argv[2];
+	// cmd2 = argv[3];
 	// outfile = argv[4];
 	// read_input(infile);
 	// execute_cmd1(cmd1);
-	execute_cmd1(cmd2);
+	redirect_stdin(infile, cmd1);
 
 }
