@@ -2,7 +2,7 @@ NAME = pipex
 
 INCLUDES = pipex.h
 
-SRCS = pipex.c split.c\
+SRCS = pipex.c split.c string.c\
 
 OBJS = $(SRCS:.c=.o)
 
