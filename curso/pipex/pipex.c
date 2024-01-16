@@ -14,8 +14,8 @@ int	redirect_stdin(char *infile, char *cmd1)
 	int		fd;
 	int		pipefd[2];
 	int		pid;
-	//char	buffer[100];
-	//int		count = 0;
+	char	buffer[100];
+	int		count_bytes = 0;
 
 	fd = open(infile, O_RDONLY);
 	if (fd == -1)
@@ -43,14 +43,18 @@ int	redirect_stdin(char *infile, char *cmd1)
 	}
 	else if (pid == 0)
 	{
-		close(pipefd[1]);
+
+		close(pipefd[0]);//close the read-end
+		dup2(pipefd[1], STDOUT_FILENO);
 		execute_cmd1(cmd1);
 	}
-	// else
-	// {
-	// 	close(pipefd[[1]]);
-	// 	write()
-	// }
+	else
+	{
+		close(pipefd[1]);
+		count_bytes = read(pipefd[0], buffer, 99);
+		buffer[count_bytes] = '\0';
+		printf("Read after execute command: %s\n", buffer);
+	}
 	return (0);
 }
 
