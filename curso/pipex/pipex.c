@@ -9,14 +9,16 @@
 		//-> 4. output the final result
 #include "pipex.h"
 
-int	redirect_stdin(char *infile, char *cmd1)
+int	redirect_stdin(char *infile, char *cmd1, char *cmd2)
 {
 	int		fd;
 	int		pipefd[2];
 	int		pid;
-	char	buffer[100];
-	int		count_bytes = 0;
+	// int		stdin_copy;
+	// char	buffer[100];
+	// int		count_bytes = 0;
 
+	// stdin_copy = dup(STDIN_FILENO);
 	fd = open(infile, O_RDONLY);
 	if (fd == -1)
 	{
@@ -47,14 +49,22 @@ int	redirect_stdin(char *infile, char *cmd1)
 		close(pipefd[0]);//close the read-end
 		dup2(pipefd[1], STDOUT_FILENO);
 		execute_cmd1(cmd1);
+		close(pipefd[1]);
+		exit(EXIT_SUCCESS);
 	}
 	else
 	{
+		// pipefd 0 == stdin
+		// pipefd 1 == receives output from cmd1
 		close(pipefd[1]);
-		count_bytes = read(pipefd[0], buffer, 99);
-		buffer[count_bytes] = '\0';
-		printf("Read after execute command: %s\n", buffer);
+		// count_bytes = read(pipefd[0], buffer, 99);
+		// buffer[count_bytes] = '\0';
+		dup2(pipefd[0], STDIN_FILENO);//make pipefd(0)/read-end as STDIN
+		execute_cmd1(cmd2);
+		close(pipefd[0]);
+		// printf("Read after execute command: %s\n", buffer);
 	}
+
 	return (0);
 }
 
@@ -130,16 +140,16 @@ int	main(int argc, char **argv)
 	char	*infile;
 	// char	*outfile;
 	char	*cmd1;
-	// char	*cmd2;
+	char	*cmd2;
 
 	if (argc != 5)
 		return (0);
 	infile = argv[1];
 	cmd1 = argv[2];
-	// cmd2 = argv[3];
+	cmd2 = argv[3];
 	// outfile = argv[4];
 	// read_input(infile);
 	// execute_cmd1(cmd1);
-	redirect_stdin(infile, cmd1);
+	redirect_stdin(infile, cmd1, cmd2);
 
 }
