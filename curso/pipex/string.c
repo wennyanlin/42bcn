@@ -1,5 +1,35 @@
 #include "pipex.h"
 
+int	string_compare(char *str1, char *str2)
+{
+	int	i;
+	int	flag;
+
+	i = 0;
+	flag = 0;
+	while (str1[i] && str2[i])
+	{
+		if (str1[i] == str2[i])
+			flag = 1;
+		i++;
+	}
+	return (flag);
+}
+
+char	*get_env(char **strs, char *ref)
+{
+	int	i;
+
+	i = 0;
+	while (strs[i])
+	{
+		if (string_compare(strs[i], ref) == 1)
+			return (strs[i]);
+		i++;
+	}
+	return (0);
+}
+
 size_t	ft_strlen(char *str)
 {
 	size_t	i;
