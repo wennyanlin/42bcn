@@ -1,25 +1,14 @@
-//creating a comunication between two file using pipe
-	//create a pipe
-		//-> 1. read a file
-				//go through the content
-		//-> 2. execute a command with the content
-				//
-		//-> 3. the result will be the input to the other command
-				//receives the input from
-		//-> 4. output the final result
 #include "pipex.h"
 
-int	redirect_stdin(char *infile, char *cmd1, char *cmd2)
+int	redirect_stdin(char *infile, char *cmd1, char *cmd2, char *outfile)
 {
 	int		fd;
+	int		fd2;
 	int		pipefd[2];
 	int		pid;
-	// int		stdin_copy;
-	// char	buffer[100];
-	// int		count_bytes = 0;
 
-	// stdin_copy = dup(STDIN_FILENO);
 	fd = open(infile, O_RDONLY);
+	fd2 = open(outfile, O_RDWR);
 	if (fd == -1)
 	{
 		perror("Error open!");
@@ -54,17 +43,13 @@ int	redirect_stdin(char *infile, char *cmd1, char *cmd2)
 	}
 	else
 	{
-		// pipefd 0 == stdin
-		// pipefd 1 == receives output from cmd1
 		close(pipefd[1]);
-		// count_bytes = read(pipefd[0], buffer, 99);
-		// buffer[count_bytes] = '\0';
+		dup2(fd2, STDOUT_FILENO);
 		dup2(pipefd[0], STDIN_FILENO);//make pipefd(0)/read-end as STDIN
+
 		execute_cmd1(cmd2);
 		close(pipefd[0]);
-		// printf("Read after execute command: %s\n", buffer);
 	}
-
 	return (0);
 }
 
@@ -121,24 +106,10 @@ char	*execute_cmd1(char *cmd1)
 	return (0);
 }
 
-//1. replace hard-coded command with the 'cmd1'
-//pass input to cmd1
-//execute cmd2
-//output the result in the outfile
-/**
- * - figure out how to write to stdin for program/process executed by execve
- * - figure out how to pass information between two programs/processes executed by execve
- * - be careful with execve
- * 	 - what happens after you call it? does your code continue after?
- * 		- try putting a println after you call execve to execute cmd1
- * 	 - you will need to learn a bit about processes & child processes etc
- * - how do we know the command is!!!
-*/
-
 int	main(int argc, char **argv)
 {
 	char	*infile;
-	// char	*outfile;
+	char	*outfile;
 	char	*cmd1;
 	char	*cmd2;
 
@@ -147,9 +118,6 @@ int	main(int argc, char **argv)
 	infile = argv[1];
 	cmd1 = argv[2];
 	cmd2 = argv[3];
-	// outfile = argv[4];
-	// read_input(infile);
-	// execute_cmd1(cmd1);
-	redirect_stdin(infile, cmd1, cmd2);
-
+	outfile = argv[4];
+	redirect_stdin(infile, cmd1, cmd2, outfile);
 }
