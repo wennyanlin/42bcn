@@ -8,7 +8,7 @@ int	redirect_stdin(char *infile, char *cmd1, char *cmd2, char *outfile)
 	int		pid;
 
 	fd = open(infile, O_RDONLY);
-	fd2 = open(outfile, O_RDWR);
+	fd2 = open(outfile, O_RDWR | O_CREAT);
 	if (fd == -1)
 	{
 		perror("Error open!");
@@ -74,10 +74,6 @@ char	*find_command_path(char *command_paths, char *cmd)
 	return (NULL);
 }
 
-// char	*ft_getenv()
-
-//how does pipe behave when file can't access?
-
 void	read_input(char *infile_name)
 	{
 		int		fd;
@@ -119,5 +115,9 @@ int	main(int argc, char **argv)
 	cmd1 = argv[2];
 	cmd2 = argv[3];
 	outfile = argv[4];
+	if (access(outfile, F_OK) != 0)
+	{
+		open(outfile, O_CREAT | O_WRONLY);
+	}
 	redirect_stdin(infile, cmd1, cmd2, outfile);
 }
