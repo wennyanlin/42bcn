@@ -21,7 +21,7 @@ t_str	get_next_word(char *string, char separator, int continue_from);
 char	*string_concat(char *path, char *cmd);
 size_t  ft_strlen(char *str);
 char	*find_command_path(char *command_paths, char *cmd);
-int		redirect_stdin(char *infile, char *cmd1, char *cmd2);
+int		redirect_stdin(char *infile, char *cmd1, char *cmd2, char *outfile);
 
 
 
