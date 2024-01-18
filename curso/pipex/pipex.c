@@ -1,6 +1,6 @@
 #include "pipex.h"
 
-int	redirect_stdin(char *infile, char *cmd1, char *cmd2, char *outfile)
+int	redirect_stdin(char *infile, char *cmd1, char *cmd2, char *outfile, char **envp)
 {
 	int		fd;
 	int		fd2;
@@ -37,7 +37,7 @@ int	redirect_stdin(char *infile, char *cmd1, char *cmd2, char *outfile)
 
 		close(pipefd[0]);//close the read-end
 		dup2(pipefd[1], STDOUT_FILENO);
-		execute_cmd1(cmd1);
+		execute_command(cmd1, envp);
 		close(pipefd[1]);
 		exit(EXIT_SUCCESS);
 	}
@@ -47,27 +47,29 @@ int	redirect_stdin(char *infile, char *cmd1, char *cmd2, char *outfile)
 		dup2(fd2, STDOUT_FILENO);
 		dup2(pipefd[0], STDIN_FILENO);//make pipefd(0)/read-end as STDIN
 
-		execute_cmd1(cmd2);
+		execute_command(cmd2, envp);
 		close(pipefd[0]);
 	}
 	return (0);
 }
 
-char	*find_command_path(char *command_paths, char *cmd)
+char	*find_path(char *env, char *cmd)
 {
-	char 	**split_paths;
-	char	*cmd_path;
+	char 	**split_env;
+	char 	**all_paths;
+	char	*path;
 	int		i;
 
 	i = 0;
-	split_paths = split(command_paths, ':');
-	while (split_paths[i])
+	split_env = split(env, '=');
+	all_paths = split(split_env[1], ':');
+	while (all_paths[i])
 	{
-		cmd_path = string_concat(split_paths[i], "/");
-		cmd_path = string_concat(cmd_path, cmd);
-		if (access(cmd_path, X_OK) == 0)
+		path = string_concat(all_paths[i], "/");
+		path = string_concat(path, cmd);
+		if (access(path, X_OK) == 0)
 		{
-			return (cmd_path);
+			return (path);
 		}
 		i++;
 	}
@@ -85,24 +87,23 @@ void	read_input(char *infile_name)
 			return ;
 		bytes_read = read(fd, buffer , 99);
 		buffer[bytes_read] = '\0';
-		printf("%s", buffer);
 	}
 
-char	*execute_cmd1(char *cmd1)
+char	*execute_command(char *cmd1, char **envp)
 {
 	char	**args;
-	char	*path;
-	char	*paths;
+	char	*env;
+	char	*command_path;
 
 // TODO: Replace hard-coded paths with PATH environment variable
-	paths = "/Users/wen/.nvm/versions/node/v16.19.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/wen/.nvm/versions/node/v16.19.0/bin";
+	env = get_env(envp, "PATH");
 	args = split(cmd1, ' ');
-	path = find_command_path(paths, args[0]);
-	execve(path, args, 0);
+	command_path = find_path(env, args[0]);
+	execve(command_path, args, 0);
 	return (0);
 }
 
-int	main(int argc, char **argv)
+int	main(int argc, char **argv, char **envp)
 {
 	char	*infile;
 	char	*outfile;
@@ -119,5 +120,5 @@ int	main(int argc, char **argv)
 	{
 		open(outfile, O_CREAT | O_WRONLY);
 	}
-	redirect_stdin(infile, cmd1, cmd2, outfile);
+	redirect_stdin(infile, cmd1, cmd2, outfile, envp);
 }
