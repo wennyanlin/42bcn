@@ -8,7 +8,7 @@ int	redirect_stdin(char *infile, char *cmd1, char *cmd2, char *outfile, char **e
 	int		pid;
 
 	fd = open(infile, O_RDONLY);
-	fd2 = open(outfile, O_RDWR | O_CREAT);
+	fd2 = open(outfile, O_CREAT | O_TRUNC | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (fd == -1)
 	{
 		perror("Error open!");
@@ -61,6 +61,8 @@ char	*find_path(char *env, char *cmd)
 	int		i;
 
 	i = 0;
+	if (access(cmd, X_OK) == 0)
+		return (cmd);
 	split_env = split(env, '=');
 	all_paths = split(split_env[1], ':');
 	while (all_paths[i])
@@ -115,10 +117,5 @@ int	main(int argc, char **argv, char **envp)
 	cmd1 = argv[2];
 	cmd2 = argv[3];
 	outfile = argv[4];
-
-	if (access(outfile, F_OK) != 0)
-	{
-		open(outfile, O_CREAT | O_WRONLY);
-	}
 	redirect_stdin(infile, cmd1, cmd2, outfile, envp);
 }
