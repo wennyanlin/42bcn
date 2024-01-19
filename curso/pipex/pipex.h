@@ -18,6 +18,7 @@ char	*execute_command(char *cmd1, char **envp);
 char	**split(char *string, char separator);
 int		count_words(char *string, char separator);
 t_str	get_next_word(char *string, char separator, int continue_from);
+t_str	parse_string(char *string, char separator, int continue_from);
 char	*string_concat(char *path, char *cmd);
 size_t  ft_strlen(char *str);
 char	*find_path(char *env, char *cmd);
