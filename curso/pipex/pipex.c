@@ -95,7 +95,6 @@ char	*execute_command(char *cmd1, char **envp)
 	char	*env;
 	char	*command_path;
 
-// TODO: Replace hard-coded paths with PATH environment variable
 	env = get_env(envp, "PATH");
 	args = split(cmd1, ' ');
 	command_path = find_path(env, args[0]);
@@ -116,6 +115,7 @@ int	main(int argc, char **argv, char **envp)
 	cmd1 = argv[2];
 	cmd2 = argv[3];
 	outfile = argv[4];
+
 	if (access(outfile, F_OK) != 0)
 	{
 		open(outfile, O_CREAT | O_WRONLY);

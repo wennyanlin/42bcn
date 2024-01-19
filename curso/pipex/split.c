@@ -19,33 +19,53 @@ int	count_words(char *string, char separator)
 	return (count_word);
 }
 
-t_str	get_next_word(char *string, char separator, int	continue_from)
+t_str	parse_string(char *string, char separator, int	continue_from)
 {
 	int		i;
-	int		j;
 	int		len;
 	int		end;
 	t_str	next_word;
 
-	len = 0;
 	i = continue_from;
-	j = 0;
+	len = 0;
+	next_word.value = NULL;
+	while (string[i]) // i = 9
+	{
+		if (string[i] && string[i] == separator)
+			i++;
+		while (string[i + len] && string[i + len] != separator)
+			len++;
+		end = i + len;
+		next_word.value = malloc(sizeof(char) * (len + 1));
+		if (!next_word.value)
+			return (next_word);
+		len = 0;//reuse len for copy chars
+		while (i < end)
+			next_word.value[len++] = string[i++];
+		next_word.continue_from_index = i + 1; // plus 1 to skip end quote
+		next_word.value[len] = '\0';
+		return (next_word);
+	}
+	return (next_word);
+}
+
+t_str	get_next_word(char *string, char separator, int	continue_from)
+{
+	int		i;
+	t_str	next_word;
+
+	i = continue_from;
 	next_word.value = NULL;
 	while (string[i])
 	{
 		while (string[i] && string[i] == separator)
 			i++;
-		while (string[i + len] && string[i + len] != separator)
-			len++;
-		next_word.value = malloc(sizeof(char) * (len + 1));
-		if (!next_word.value)
-			return (next_word);
-		end = len + i;
-		while (i < end)
-			next_word.value[j++] = string[i++];
-		next_word.continue_from_index = i;
-		next_word.value[j] = '\0';
-		return (next_word);
+		if (string[i] && string[i] == '"')
+		{
+			return (parse_string(string, '"', i));
+		}
+		else
+			return (parse_string(string, separator, i));
 	}
 	return (next_word);
 }
