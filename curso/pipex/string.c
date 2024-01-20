@@ -32,12 +32,12 @@ char	*get_env(char **strs, char *ref)
 
 size_t	ft_strlen(char *str)
 {
-	size_t	i;
+	size_t	len;
 
-	i = 0;
-	while (str[i])
-		i++;
-	return(i);
+	len = 0;
+	while (str[len])
+		len++;
+	return(len);
 }
 
 char	*string_concat(char *path, char *cmd)
@@ -65,4 +65,28 @@ char	*string_concat(char *path, char *cmd)
 		result_path[i++] = cmd[cmd_len++];
 	result_path[i] = '\0';
 	return (result_path);
+}
+
+char	**array_concat(char *shell_path, char **args)
+{
+	char 	**result_args;
+	int		len;
+	int		i;
+
+	len = 0;
+	i = 0;
+	while (args[len])
+		len++;
+	result_args = malloc(sizeof(char*) * (len + 2));
+	if (!result_args)
+		return (NULL);
+	result_args[i] = shell_path;
+	i++;
+	while (i < len + 1)
+	{
+		result_args[i] = args[i - 1];
+		i++;
+	}
+	result_args[i] = NULL;
+	return (result_args);
 }

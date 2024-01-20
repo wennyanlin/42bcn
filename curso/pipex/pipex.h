@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
+#include <string.h>
+#include <errno.h>
 
 typedef struct s_str
 {
@@ -25,7 +27,7 @@ char	*find_path(char *env, char *cmd);
 int		redirect_stdin(char *infile, char *cmd1, char *cmd2, char *outfile, char **envp);
 char	*get_env(char **strs, char *ref);
 int		string_compare(char *str1, char *str2);
-
+char	**array_concat(char *shell_path, char **args);
 
 #endif
 
