@@ -69,6 +69,7 @@ char	*find_path(char *env, char *cmd)
 	{
 		path = string_concat(all_paths[i], "/");
 		path = string_concat(path, cmd);
+
 		if (access(path, X_OK) == 0)
 		{
 			return (path);
@@ -76,6 +77,26 @@ char	*find_path(char *env, char *cmd)
 		i++;
 	}
 	return (NULL);
+}
+
+char	*execute_command(char *cmd1, char **envp)
+{
+	char	**args;
+	char	*env;
+	char	*command_path;
+	char	**result_array_concat;
+
+	env = get_env(envp, "PATH");
+	args = split(cmd1, ' ');//["./script", NULL]
+	command_path = find_path(env, args[0]);//"./script"
+	printf("cmd path: %s\n", command_path);
+	execve(command_path, args, 0);
+	if (errno == 8)
+	{
+		result_array_concat = array_concat("/bin/sh", args);
+		execve("/bin/sh", result_array_concat, 0);
+	}
+	return (0);
 }
 
 void	read_input(char *infile_name)
@@ -90,19 +111,6 @@ void	read_input(char *infile_name)
 		bytes_read = read(fd, buffer , 99);
 		buffer[bytes_read] = '\0';
 	}
-
-char	*execute_command(char *cmd1, char **envp)
-{
-	char	**args;
-	char	*env;
-	char	*command_path;
-
-	env = get_env(envp, "PATH");
-	args = split(cmd1, ' ');
-	command_path = find_path(env, args[0]);
-	execve(command_path, args, 0);
-	return (0);
-}
 
 int	main(int argc, char **argv, char **envp)
 {
