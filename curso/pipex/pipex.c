@@ -11,25 +11,30 @@ int	redirect_stdin(char *infile, char *cmd1, char *cmd2, char *outfile, char **e
 	fd2 = open(outfile, O_CREAT | O_TRUNC | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (fd == -1)
 	{
-		perror("Error open!");
-		return (1);
+		perror(infile);
+		//exit(EXIT_FAILURE);//return 0 or 1???
 	}
-	if (dup2(fd, STDIN_FILENO) == -1)
+	if (fd2 == -1)
 	{
-		perror("Error dup2");
+		perror(outfile);
+		exit(EXIT_FAILURE);
+	}
+	if (fd != -1 && dup2(fd, STDIN_FILENO) == -1)
+	{
+		perror("dup2");
 		close(fd);
-		return (1);
+		exit(EXIT_FAILURE);
 	}
 	close(fd);
 	if (pipe(pipefd) == -1)
 	{
-		perror("Error pipe");
-		return (1);
+		perror("pipe");
+		exit(EXIT_FAILURE);
 	}
 	pid = fork();
 	if (pid == -1)
 	{
-		perror("Error Forking");
+		perror("fork");
 		exit(EXIT_FAILURE);
 	}
 	else if (pid == 0)
@@ -63,6 +68,11 @@ char	*find_path(char *env, char *cmd)
 	i = 0;
 	if (access(cmd, X_OK) == 0)
 		return (cmd);
+	else if (access(cmd, F_OK) == 0 && access(cmd, X_OK) != 0)
+	{
+		perror(cmd);
+		exit(126);
+	}
 	split_env = split(env, '=');
 	all_paths = split(split_env[1], ':');
 	while (all_paths[i])
@@ -76,7 +86,9 @@ char	*find_path(char *env, char *cmd)
 		}
 		i++;
 	}
-	return (NULL);
+	write(2, cmd, (ft_strlen(cmd) + 1));
+	write(2, ": command not found\n", 20);
+	exit(EXIT_FAILURE);
 }
 
 char	*execute_command(char *cmd1, char **envp)
@@ -89,13 +101,19 @@ char	*execute_command(char *cmd1, char **envp)
 	env = get_env(envp, "PATH");
 	args = split(cmd1, ' ');//["./script", NULL]
 	command_path = find_path(env, args[0]);//"./script"
-	printf("cmd path: %s\n", command_path);
+	// printf("cmd path: %s\n", command_path);
 	execve(command_path, args, 0);
+
 	if (errno == 8)
 	{
 		result_array_concat = array_concat("/bin/sh", args);
 		execve("/bin/sh", result_array_concat, 0);
 	}
+	else if (errno == ENOENT)
+		perror(cmd1);
+	free(args);
+	free(command_path);
+	free(result_array_concat);
 	return (0);
 }
 
