@@ -1,5 +1,37 @@
 #include "pipex.h"
 
+void	perror_and_exit(char *file, int code)
+{
+	perror(file);
+	exit(code);
+}
+
+void	fd_dup2(int oldfd, int newfd)
+{
+	if (oldfd != -1 && dup2(oldfd, newfd) == -1)
+	{
+		close(oldfd);
+		perror_and_exit("dup2", EXIT_FAILURE);
+	}
+	close(oldfd);
+}
+
+void	child_process(int pipefd[2], char *cmd1, char **envp)
+{
+	close(pipefd[0]);//close the read-end
+	fd_dup2(pipefd[1], STDOUT_FILENO);
+	execute_command(cmd1, envp);
+	exit(EXIT_SUCCESS);
+}
+
+void	parent_process(int pipefd[2], int fd2, char *cmd2, char **envp)
+{
+	close(pipefd[1]);
+	fd_dup2(fd2, STDOUT_FILENO);
+	fd_dup2(pipefd[0], STDIN_FILENO);//make pipefd(0)/read-end as STDIN
+	execute_command(cmd2, envp);
+}
+
 int	redirect_stdin(char *infile, char *cmd1, char *cmd2, char *outfile, char **envp)
 {
 	int		fd;
@@ -10,51 +42,19 @@ int	redirect_stdin(char *infile, char *cmd1, char *cmd2, char *outfile, char **e
 	fd = open(infile, O_RDONLY);
 	fd2 = open(outfile, O_CREAT | O_TRUNC | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (fd == -1)
-	{
 		perror(infile);
-		//exit(EXIT_FAILURE);//return 0 or 1???
-	}
 	if (fd2 == -1)
-	{
-		perror(outfile);
-		exit(EXIT_FAILURE);
-	}
-	if (fd != -1 && dup2(fd, STDIN_FILENO) == -1)
-	{
-		perror("dup2");
-		close(fd);
-		exit(EXIT_FAILURE);
-	}
-	close(fd);
+		perror_and_exit(outfile, EXIT_FAILURE);
+	fd_dup2(fd, STDIN_FILENO);
 	if (pipe(pipefd) == -1)
-	{
-		perror("pipe");
-		exit(EXIT_FAILURE);
-	}
+		perror_and_exit("pipe", EXIT_FAILURE);
 	pid = fork();
 	if (pid == -1)
-	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	}
+		perror_and_exit("fork", EXIT_FAILURE);
 	else if (pid == 0)
-	{
-
-		close(pipefd[0]);//close the read-end
-		dup2(pipefd[1], STDOUT_FILENO);
-		execute_command(cmd1, envp);
-		close(pipefd[1]);
-		exit(EXIT_SUCCESS);
-	}
+		child_process(pipefd, cmd1, envp);
 	else
-	{
-		close(pipefd[1]);
-		dup2(fd2, STDOUT_FILENO);
-		dup2(pipefd[0], STDIN_FILENO);//make pipefd(0)/read-end as STDIN
-
-		execute_command(cmd2, envp);
-		close(pipefd[0]);
-	}
+		parent_process(pipefd, fd2, cmd2, envp);
 	return (0);
 }
 
@@ -69,10 +69,7 @@ char	*find_path(char *env, char *cmd)
 	if (access(cmd, X_OK) == 0)
 		return (cmd);
 	else if (access(cmd, F_OK) == 0 && access(cmd, X_OK) != 0)
-	{
-		perror(cmd);
-		exit(126);
-	}
+		perror_and_exit(cmd, 126);
 	split_env = split(env, '=');
 	all_paths = split(split_env[1], ':');
 	while (all_paths[i])
@@ -81,9 +78,7 @@ char	*find_path(char *env, char *cmd)
 		path = string_concat(path, cmd);
 
 		if (access(path, X_OK) == 0)
-		{
 			return (path);
-		}
 		i++;
 	}
 	write(2, cmd, (ft_strlen(cmd) + 1));
@@ -96,14 +91,12 @@ char	*execute_command(char *cmd1, char **envp)
 	char	**args;
 	char	*env;
 	char	*command_path;
-	char	**result_array_concat;
+	char	**result_array_concat = NULL;
 
 	env = get_env(envp, "PATH");
 	args = split(cmd1, ' ');//["./script", NULL]
 	command_path = find_path(env, args[0]);//"./script"
-	// printf("cmd path: %s\n", command_path);
 	execve(command_path, args, 0);
-
 	if (errno == 8)
 	{
 		result_array_concat = array_concat("/bin/sh", args);
@@ -113,22 +106,9 @@ char	*execute_command(char *cmd1, char **envp)
 		perror(cmd1);
 	free(args);
 	free(command_path);
-	free(result_array_concat);
+	// free(result_array_concat);
 	return (0);
 }
-
-void	read_input(char *infile_name)
-	{
-		int		fd;
-		char	buffer[100];
-		int		bytes_read;
-
-		fd = open(infile_name, O_RDWR);
-		if (fd == -1)
-			return ;
-		bytes_read = read(fd, buffer , 99);
-		buffer[bytes_read] = '\0';
-	}
 
 int	main(int argc, char **argv, char **envp)
 {

@@ -14,8 +14,6 @@ typedef struct s_str
 	int		continue_from_index;
 }	t_str;
 
-
-void	read_input(char *infile_name);
 char	*execute_command(char *cmd1, char **envp);
 char	**split(char *string, char separator);
 int		count_words(char *string, char separator);
@@ -28,6 +26,11 @@ int		redirect_stdin(char *infile, char *cmd1, char *cmd2, char *outfile, char **
 char	*get_env(char **strs, char *ref);
 int		string_compare(char *str1, char *str2);
 char	**array_concat(char *shell_path, char **args);
+void	perror_and_exit(char *file, int code);
+void	child_process(int pipefd[2], char *cmd1, char **envp);
+void	parent_process(int pipefd[2], int fd2, char *cmd2, char **envp);
+void	fd_dup2(int oldfd, int newfd);
+t_str	chars_copy(t_str result, char *string, int len, int end);
 
 #endif
 
