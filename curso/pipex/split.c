@@ -1,5 +1,7 @@
 #include "pipex.h"
 
+
+
 int	count_words(char *string, char separator)
 {
 	int	count_word;
@@ -39,14 +41,22 @@ t_str	parse_string(char *string, char separator, int	continue_from)
 		next_word.value = malloc(sizeof(char) * (len + 1));
 		if (!next_word.value)
 			return (next_word);
-		len = 0;//reuse len for copy chars
-		while (i < end)
-			next_word.value[len++] = string[i++];
-		next_word.continue_from_index = i + 1; // plus 1 to skip end quote
-		next_word.value[len] = '\0';
+		next_word = chars_copy(next_word, string, i, end);
 		return (next_word);
 	}
 	return (next_word);
+}
+
+t_str	chars_copy(t_str result, char *string, int start, int end)
+{
+	int	i;
+
+	i = 0;
+	while (start < end)
+		result.value[i++] = string[start++];
+	result.value[i] = '\0';
+	result.continue_from_index = start + 1;
+	return (result);
 }
 
 t_str	get_next_word(char *string, char separator, int	continue_from)
