@@ -75,8 +75,10 @@ char	**ps_split(char *array, char separator)
 		result_array[i++] = get_next_word(array, separator);
 	}
 	result_array[i] = NULL; //add final Null terminator
+
 	return (result_array);
 }
+
 	//allocate space for the big array
 		//calculate the lentgh, how many strs there are
 		//allocate the mamory space

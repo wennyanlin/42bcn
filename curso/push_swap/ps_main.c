@@ -31,6 +31,31 @@ int	calculate_array_size(char **array)
 	return (i);
 }
 
+void	free_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+	{
+		free(array[i++]);
+	}
+	free(array);
+}
+
+void	free_stack(t_stack *list)
+{
+	t_stack	*tmp;
+
+	while (list)
+	{
+		tmp = list;
+		list = list->next;
+		free(tmp);
+	}
+	list = NULL;
+}
+
 int	main(int argc, char **argv)
 {
 	t_stack *list_a;
@@ -45,6 +70,8 @@ int	main(int argc, char **argv)
 		list_a = NULL;
 		list_a = malloc(sizeof(t_stack));
 		ps_stack_init(list_a, argv, argc);
+		free_array(argv);
+		argv = NULL;
 		list_b = NULL;
 		if (is_stack_sorted(&list_a) == true)
 		{
@@ -65,6 +92,8 @@ int	main(int argc, char **argv)
 			else
 				sort(&list_a, &list_b);
 		}
+		free_stack(list_a);
+
 		// printf("\n\n------- STACK A -------\n\n");
 		// print_stack(list_a);
 		// printf("\n\n------- STACK B -------\n\n");
