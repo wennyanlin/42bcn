@@ -58,11 +58,22 @@ int	redirect_stdin(char *infile, char *cmd1, char *cmd2, char *outfile, char **e
 	return (0);
 }
 
+void	free_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+		free(array[i++]);
+	free(array);
+}
+
 char	*find_path(char *env, char *cmd)
 {
 	char 	**split_env;
 	char 	**all_paths;
 	char	*path;
+	char	*path2;
 	int		i;
 
 	i = 0;
@@ -72,15 +83,22 @@ char	*find_path(char *env, char *cmd)
 		perror_and_exit(cmd, 126);
 	split_env = split(env, '=');
 	all_paths = split(split_env[1], ':');
+	free_array(split_env);
+	split_env = NULL;
 	while (all_paths[i])
 	{
 		path = string_concat(all_paths[i], "/");
-		path = string_concat(path, cmd);
-
-		if (access(path, X_OK) == 0)
-			return (path);
+		path2 = string_concat(path, cmd);
+		free(path);
+		path = NULL;
+		if (access(path2, X_OK) == 0)
+			return (path2);
+		free(path2);
+		path2 = NULL;
 		i++;
 	}
+	free_array(all_paths);
+	all_paths = NULL;
 	write(2, cmd, (ft_strlen(cmd) + 1));
 	write(2, ": command not found\n", 20);
 	exit(EXIT_FAILURE);
@@ -97,16 +115,19 @@ char	*execute_command(char *cmd1, char **envp)
 	args = split(cmd1, ' ');//["./script", NULL]
 	command_path = find_path(env, args[0]);//"./script"
 	execve(command_path, args, 0);
+	free(command_path);
+	command_path = NULL;
 	if (errno == 8)
 	{
 		result_array_concat = array_concat("/bin/sh", args);
 		execve("/bin/sh", result_array_concat, 0);
+		free_array(args);
+		args = NULL;
+		free_array(result_array_concat);
+		result_array_concat = NULL;
 	}
 	else if (errno == ENOENT)
 		perror(cmd1);
-	free(args);
-	free(command_path);
-	// free(result_array_concat);
 	return (0);
 }
 
