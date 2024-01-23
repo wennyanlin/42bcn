@@ -68,6 +68,28 @@ void	free_array(char **array)
 	free(array);
 }
 
+int	is_empty_command(char *cmd)
+{
+	int	flag;
+	int	i;
+
+	flag = 0;
+	i = 0;
+	if (!cmd)
+	{
+		flag = 1;
+		return (flag);
+	}
+	while (cmd[i])
+	{
+		if (cmd[i] != ' ')
+			return (flag);
+		flag = 1;
+		i++;
+	}
+	return (flag);
+}
+
 char	*find_path(char *env, char *cmd)
 {
 	char 	**split_env;
@@ -78,9 +100,18 @@ char	*find_path(char *env, char *cmd)
 
 	i = 0;
 	if (access(cmd, X_OK) == 0)
+	{
+		printf("%s\n", cmd);
 		return (cmd);
+	}
 	else if (access(cmd, F_OK) == 0 && access(cmd, X_OK) != 0)
 		perror_and_exit(cmd, 126);
+	else if (is_empty_command(cmd) == 1)
+	{
+		write(2, cmd, (ft_strlen(cmd) + 1));
+		write(2, ": command not found\n", 20);
+		exit(EXIT_FAILURE);
+	}
 	split_env = split(env, '=');
 	all_paths = split(split_env[1], ':');
 	free_array(split_env);
@@ -92,7 +123,10 @@ char	*find_path(char *env, char *cmd)
 		free(path);
 		path = NULL;
 		if (access(path2, X_OK) == 0)
+		{
+			printf("%s\n", path2);
 			return (path2);
+		}
 		free(path2);
 		path2 = NULL;
 		i++;
@@ -128,6 +162,7 @@ char	*execute_command(char *cmd1, char **envp)
 	}
 	else if (errno == ENOENT)
 		perror(cmd1);
+	perror(cmd1);
 	return (0);
 }
 
@@ -144,5 +179,6 @@ int	main(int argc, char **argv, char **envp)
 	cmd1 = argv[2];
 	cmd2 = argv[3];
 	outfile = argv[4];
+	execute_command(cmd1, envp);
 	redirect_stdin(infile, cmd1, cmd2, outfile, envp);
 }

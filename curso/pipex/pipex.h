@@ -31,6 +31,7 @@ void	child_process(int pipefd[2], char *cmd1, char **envp);
 void	parent_process(int pipefd[2], int fd2, char *cmd2, char **envp);
 void	fd_dup2(int oldfd, int newfd);
 t_str	chars_copy(t_str result, char *string, int len, int end);
+int		is_empty_command(char *cmd);
 
 #endif
 
