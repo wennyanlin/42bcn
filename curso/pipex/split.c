@@ -86,11 +86,17 @@ char	**split(char *string, char separator)
 	int		num_words;
 	int		i;
 	t_str	word;
+	char	**empty;
 
 	i = 0;
 	word.continue_from_index = 0;
 	if (!*string)
-		return (NULL);
+	{
+		empty = malloc(sizeof(char*) * 2);
+		empty[0] = "";
+		empty[1] = NULL;
+		return (empty);
+	}
 	num_words = count_words(string, separator);
 	result_array = malloc(sizeof(char*) * (num_words + 1));
 	if (!result_array)
